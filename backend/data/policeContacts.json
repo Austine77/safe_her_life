@@ -1,0 +1,1489 @@
+[
+  {
+    "state": "Abia",
+    "command": "Abia State Police Command",
+    "pproName": "DSP Maureen Chioma Chinaka",
+    "phone": "08035415405",
+    "keywords": [
+      "abia",
+      "umuahia",
+      "aba"
+    ],
+    "sourceTitle": "Abia State Police Command emergency hotlines (checked March/April 2026)",
+    "sourceUrl": "https://www.facebook.com/abiapolicecommand/",
+    "verificationStatus": "official_command_post",
+    "divisions": [
+      {
+        "name": "Umuahia",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified Abia State Command emergency hotlines until a public local divisional number is confirmed.",
+        "keywords": [
+          "umuahia"
+        ]
+      },
+      {
+        "name": "Aba",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified Abia State Command emergency hotlines until a public local divisional number is confirmed.",
+        "keywords": [
+          "aba"
+        ]
+      }
+    ],
+    "lastVerified": "2026-04-11",
+    "hotlines": [
+      {
+        "label": "Emergency hotline 1",
+        "phone": "08035415405",
+        "verificationStatus": "official_command_post",
+        "lastVerified": "2026-04-11"
+      },
+      {
+        "label": "Emergency hotline 2",
+        "phone": "08079210004",
+        "verificationStatus": "official_command_post",
+        "lastVerified": "2026-04-11"
+      },
+      {
+        "label": "Emergency hotline 3",
+        "phone": "08079210005",
+        "verificationStatus": "official_command_post",
+        "lastVerified": "2026-04-11"
+      },
+      {
+        "label": "Emergency hotline 4",
+        "phone": "08079210006",
+        "verificationStatus": "official_command_post",
+        "lastVerified": "2026-04-11"
+      }
+    ]
+  },
+  {
+    "state": "Adamawa",
+    "command": "Adamawa State Police Command",
+    "pproName": "SP Yahaya Suleiman",
+    "phone": "08065604764",
+    "keywords": [
+      "adamawa",
+      "yola",
+      "mubi"
+    ],
+    "sourceTitle": "Nigeria Police Force contact directory (checked April 2026)",
+    "sourceUrl": "https://www.npf.gov.ng/contact/display",
+    "verificationStatus": "official_directory",
+    "divisions": [
+      {
+        "name": "Yola",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "yola"
+        ]
+      },
+      {
+        "name": "Mubi",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "mubi"
+        ]
+      }
+    ],
+    "lastVerified": "2026-04-11"
+  },
+  {
+    "state": "Akwa Ibom",
+    "command": "Akwa Ibom State Police Command",
+    "pproName": "DSP Timfon John",
+    "phone": "07039685410",
+    "keywords": [
+      "akwa ibom",
+      "uyo",
+      "ikot ekpene",
+      "eket"
+    ],
+    "sourceTitle": "Nigeria Police Force contact directory (checked April 2026)",
+    "sourceUrl": "https://www.npf.gov.ng/contact/display",
+    "verificationStatus": "official_directory",
+    "divisions": [
+      {
+        "name": "Uyo",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "uyo"
+        ]
+      },
+      {
+        "name": "Ikot Ekpene",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "ikot ekpene"
+        ]
+      },
+      {
+        "name": "Eket",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "eket"
+        ]
+      }
+    ],
+    "lastVerified": "2026-04-11"
+  },
+  {
+    "state": "Anambra",
+    "command": "Anambra State Police Command",
+    "pproName": "SP Ikenganyia T. Anthony",
+    "phone": "08039334002",
+    "keywords": [
+      "anambra",
+      "awka",
+      "onitsha",
+      "nnewi"
+    ],
+    "sourceTitle": "Nigeria Police Force contact directory (checked April 2026)",
+    "sourceUrl": "https://www.npf.gov.ng/contact/display",
+    "verificationStatus": "official_directory",
+    "divisions": [
+      {
+        "name": "Awka",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "awka"
+        ]
+      },
+      {
+        "name": "Onitsha",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "onitsha"
+        ]
+      },
+      {
+        "name": "Nnewi",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "nnewi"
+        ]
+      }
+    ],
+    "lastVerified": "2026-04-11"
+  },
+  {
+    "state": "Bauchi",
+    "command": "Bauchi State Police Command",
+    "pproName": "SP Habib Nafiu",
+    "phone": "08050404039",
+    "keywords": [
+      "bauchi",
+      "misau",
+      "azare"
+    ],
+    "sourceTitle": "Nigeria Police Force contact directory (checked April 2026)",
+    "sourceUrl": "https://www.npf.gov.ng/contact/display",
+    "verificationStatus": "official_directory",
+    "divisions": [
+      {
+        "name": "Misau",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "misau"
+        ]
+      },
+      {
+        "name": "Azare",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "azare"
+        ]
+      }
+    ],
+    "lastVerified": "2026-04-11"
+  },
+  {
+    "state": "Bayelsa",
+    "command": "Bayelsa State Police Command",
+    "pproName": "DSP Musa Mohammed",
+    "phone": "07032702984",
+    "keywords": [
+      "bayelsa",
+      "yenagoa"
+    ],
+    "sourceTitle": "Nigeria Police Force contact directory (checked April 2026)",
+    "sourceUrl": "https://www.npf.gov.ng/contact/display",
+    "verificationStatus": "official_directory",
+    "divisions": [
+      {
+        "name": "Yenagoa",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "yenagoa"
+        ]
+      }
+    ],
+    "lastVerified": "2026-04-11"
+  },
+  {
+    "state": "Benue",
+    "command": "Benue State Police Command",
+    "pproName": "DSP Udeme Edet",
+    "phone": "08065232481",
+    "keywords": [
+      "benue",
+      "makurdi",
+      "otukpo"
+    ],
+    "sourceTitle": "Nigeria Police Force contact directory (checked April 2026)",
+    "sourceUrl": "https://www.npf.gov.ng/contact/display",
+    "verificationStatus": "official_directory",
+    "divisions": [
+      {
+        "name": "Makurdi",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "makurdi"
+        ]
+      },
+      {
+        "name": "Otukpo",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "otukpo"
+        ]
+      }
+    ],
+    "lastVerified": "2026-04-11"
+  },
+  {
+    "state": "Borno",
+    "command": "Borno State Police Command",
+    "pproName": "ASP Daso Nahum Kenneth",
+    "phone": "09025437854",
+    "keywords": [
+      "borno",
+      "maiduguri"
+    ],
+    "sourceTitle": "Nigeria Police Force contact directory (checked April 2026)",
+    "sourceUrl": "https://www.npf.gov.ng/contact/display",
+    "verificationStatus": "official_directory",
+    "divisions": [
+      {
+        "name": "Maiduguri",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "maiduguri"
+        ]
+      }
+    ],
+    "lastVerified": "2026-04-11"
+  },
+  {
+    "state": "Cross River",
+    "command": "Cross River State Police Command",
+    "pproName": "ASP Eitokpah Sunday A.",
+    "phone": "07067977330",
+    "keywords": [
+      "cross river",
+      "calabar",
+      "ikom"
+    ],
+    "sourceTitle": "Nigeria Police Force contact directory (checked April 2026)",
+    "sourceUrl": "https://www.npf.gov.ng/contact/display",
+    "verificationStatus": "official_directory",
+    "divisions": [
+      {
+        "name": "Calabar",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "calabar"
+        ]
+      },
+      {
+        "name": "Ikom",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "ikom"
+        ]
+      }
+    ],
+    "lastVerified": "2026-04-11"
+  },
+  {
+    "state": "Delta",
+    "command": "Delta State Police Command",
+    "pproName": "SP Edafe Bright",
+    "phone": "08131070122",
+    "keywords": [
+      "delta",
+      "asaba",
+      "warri",
+      "sapele"
+    ],
+    "sourceTitle": "Nigeria Police Force contact directory (checked April 2026)",
+    "sourceUrl": "https://www.npf.gov.ng/contact/display",
+    "verificationStatus": "official_directory",
+    "divisions": [
+      {
+        "name": "Asaba",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "asaba"
+        ]
+      },
+      {
+        "name": "Warri",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "warri"
+        ]
+      },
+      {
+        "name": "Sapele",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "sapele"
+        ]
+      }
+    ],
+    "lastVerified": "2026-04-11"
+  },
+  {
+    "state": "Ebonyi",
+    "command": "Ebonyi State Police Command",
+    "pproName": "SP Ukandu Joshua",
+    "phone": "08032716251",
+    "keywords": [
+      "ebonyi",
+      "abakaliki"
+    ],
+    "sourceTitle": "Nigeria Police Force contact directory (checked April 2026)",
+    "sourceUrl": "https://www.npf.gov.ng/contact/display",
+    "verificationStatus": "official_directory",
+    "divisions": [
+      {
+        "name": "Abakaliki",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "abakaliki"
+        ]
+      }
+    ],
+    "lastVerified": "2026-04-11"
+  },
+  {
+    "state": "Edo",
+    "command": "Edo State Police Command",
+    "pproName": "ASP Eno Ekereuwen",
+    "phone": "08169099849",
+    "keywords": [
+      "edo",
+      "benin",
+      "ekpoma"
+    ],
+    "sourceTitle": "Nigeria Police Force contact directory (checked April 2026)",
+    "sourceUrl": "https://www.npf.gov.ng/contact/display",
+    "verificationStatus": "official_directory",
+    "divisions": [
+      {
+        "name": "Benin",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "benin"
+        ]
+      },
+      {
+        "name": "Ekpoma",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "ekpoma"
+        ]
+      }
+    ],
+    "lastVerified": "2026-04-11"
+  },
+  {
+    "state": "Ekiti",
+    "command": "Ekiti State Police Command",
+    "pproName": "SP Abutu Sunday",
+    "phone": "09064050086",
+    "keywords": [
+      "ekiti",
+      "ado ekiti",
+      "ikere"
+    ],
+    "sourceTitle": "Nigeria Police Force contact directory (checked April 2026)",
+    "sourceUrl": "https://www.npf.gov.ng/contact/display",
+    "verificationStatus": "official_directory",
+    "divisions": [
+      {
+        "name": "Ado Ekiti",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "ado ekiti"
+        ]
+      },
+      {
+        "name": "Ikere",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "ikere"
+        ]
+      }
+    ],
+    "lastVerified": "2026-04-11"
+  },
+  {
+    "state": "Enugu",
+    "command": "Enugu State Police Command",
+    "pproName": "SP Daniel Ndukwe Ekea",
+    "phone": "08063722988",
+    "keywords": [
+      "enugu",
+      "nsukka"
+    ],
+    "sourceTitle": "Nigeria Police Force contact directory (checked April 2026)",
+    "sourceUrl": "https://www.npf.gov.ng/contact/display",
+    "verificationStatus": "official_directory",
+    "divisions": [
+      {
+        "name": "Nsukka",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "nsukka"
+        ]
+      }
+    ],
+    "lastVerified": "2026-04-11"
+  },
+  {
+    "state": "FCT Abuja",
+    "command": "FCT Police Command",
+    "pproName": "SP Josephine Adeh",
+    "phone": "07038979348",
+    "keywords": [
+      "abuja",
+      "fct",
+      "garki",
+      "wuse",
+      "maitama",
+      "gwarinpa"
+    ],
+    "sourceTitle": "Nigeria Police Force contact directory (checked April 2026)",
+    "sourceUrl": "https://www.npf.gov.ng/contact/display",
+    "verificationStatus": "official_directory",
+    "divisions": [
+      {
+        "name": "Garki",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "garki"
+        ]
+      },
+      {
+        "name": "Wuse",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "wuse"
+        ]
+      },
+      {
+        "name": "Maitama",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "maitama"
+        ]
+      },
+      {
+        "name": "Gwarinpa",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "gwarinpa"
+        ]
+      },
+      {
+        "name": "Kubwa",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "kubwa"
+        ]
+      }
+    ],
+    "lastVerified": "2026-04-11"
+  },
+  {
+    "state": "Gombe",
+    "command": "Gombe State Police Command",
+    "pproName": "DSP Buhari Abdullahi",
+    "phone": "07038793973",
+    "keywords": [
+      "gombe"
+    ],
+    "sourceTitle": "Nigeria Police Force contact directory (checked April 2026)",
+    "sourceUrl": "https://www.npf.gov.ng/contact/display",
+    "verificationStatus": "official_directory",
+    "divisions": [],
+    "lastVerified": "2026-04-11"
+  },
+  {
+    "state": "Imo",
+    "command": "Imo State Police Command",
+    "pproName": "DSP Okoye Henry",
+    "phone": "08148024755",
+    "keywords": [
+      "imo",
+      "owerri",
+      "orlu"
+    ],
+    "sourceTitle": "Nigeria Police Force contact directory (checked April 2026)",
+    "sourceUrl": "https://www.npf.gov.ng/contact/display",
+    "verificationStatus": "official_directory",
+    "divisions": [
+      {
+        "name": "Owerri",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "owerri"
+        ]
+      },
+      {
+        "name": "Orlu",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "orlu"
+        ]
+      }
+    ],
+    "lastVerified": "2026-04-11"
+  },
+  {
+    "state": "Jigawa",
+    "command": "Jigawa State Police Command",
+    "pproName": "SP Lawan Shiisu Adam",
+    "phone": "08109881890",
+    "keywords": [
+      "jigawa",
+      "dutse"
+    ],
+    "sourceTitle": "Nigeria Police Force contact directory (checked April 2026)",
+    "sourceUrl": "https://www.npf.gov.ng/contact/display",
+    "verificationStatus": "official_directory",
+    "divisions": [
+      {
+        "name": "Dutse",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "dutse"
+        ]
+      }
+    ],
+    "lastVerified": "2026-04-11"
+  },
+  {
+    "state": "Kaduna",
+    "command": "Kaduna State Police Command",
+    "pproName": "DSP Mansir Hassan",
+    "phone": "08166405566",
+    "keywords": [
+      "kaduna",
+      "zaria",
+      "kafanchan"
+    ],
+    "sourceTitle": "Nigeria Police Force contact directory (checked April 2026)",
+    "sourceUrl": "https://www.npf.gov.ng/contact/display",
+    "verificationStatus": "official_directory",
+    "divisions": [
+      {
+        "name": "Zaria",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "zaria"
+        ]
+      },
+      {
+        "name": "Kafanchan",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "kafanchan"
+        ]
+      }
+    ],
+    "lastVerified": "2026-04-11"
+  },
+  {
+    "state": "Kano",
+    "command": "Kano State Police Command",
+    "pproName": "SP Haruna Abdullahi",
+    "phone": "08037742748",
+    "keywords": [
+      "kano"
+    ],
+    "sourceTitle": "Nigeria Police Force contact directory (checked April 2026)",
+    "sourceUrl": "https://www.npf.gov.ng/contact/display",
+    "verificationStatus": "official_directory",
+    "divisions": [],
+    "lastVerified": "2026-04-11"
+  },
+  {
+    "state": "Katsina",
+    "command": "Katsina State Police Command",
+    "pproName": "DSP Abubakar Sadiq Aliyu",
+    "phone": "08133233534",
+    "keywords": [
+      "katsina",
+      "daura"
+    ],
+    "sourceTitle": "Nigeria Police Force contact directory (checked April 2026)",
+    "sourceUrl": "https://www.npf.gov.ng/contact/display",
+    "verificationStatus": "official_directory",
+    "divisions": [
+      {
+        "name": "Daura",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "daura"
+        ]
+      }
+    ],
+    "lastVerified": "2026-04-11"
+  },
+  {
+    "state": "Kebbi",
+    "command": "Kebbi State Police Command",
+    "pproName": "SP Nafiu Abubakar",
+    "phone": "08065159812",
+    "keywords": [
+      "kebbi",
+      "birnin kebbi"
+    ],
+    "sourceTitle": "Nigeria Police Force contact directory (checked April 2026)",
+    "sourceUrl": "https://www.npf.gov.ng/contact/display",
+    "verificationStatus": "official_directory",
+    "divisions": [
+      {
+        "name": "Birnin Kebbi",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "birnin kebbi"
+        ]
+      }
+    ],
+    "lastVerified": "2026-04-11"
+  },
+  {
+    "state": "Kogi",
+    "command": "Kogi State Police Command",
+    "pproName": "CSP William Ovye Aya",
+    "phone": "08107899269",
+    "keywords": [
+      "kogi",
+      "lokoja",
+      "okene"
+    ],
+    "sourceTitle": "Nigeria Police Force contact directory (checked April 2026)",
+    "sourceUrl": "https://www.npf.gov.ng/contact/display",
+    "verificationStatus": "official_directory",
+    "divisions": [
+      {
+        "name": "Lokoja",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "lokoja"
+        ]
+      },
+      {
+        "name": "Okene",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "okene"
+        ]
+      }
+    ],
+    "lastVerified": "2026-04-11"
+  },
+  {
+    "state": "Kwara",
+    "command": "Kwara State Police Command",
+    "pproName": "SP Ejire-Adeyemi Adetoun",
+    "phone": "07032108353",
+    "keywords": [
+      "kwara",
+      "ilorin"
+    ],
+    "sourceTitle": "Nigeria Police Force contact directory (checked April 2026)",
+    "sourceUrl": "https://www.npf.gov.ng/contact/display",
+    "verificationStatus": "official_directory",
+    "divisions": [
+      {
+        "name": "Ilorin",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "ilorin"
+        ]
+      }
+    ],
+    "lastVerified": "2026-04-11"
+  },
+  {
+    "state": "Lagos",
+    "command": "Lagos State Police Command",
+    "pproName": "SP Abimbola Adebisi",
+    "phone": "09055390070",
+    "keywords": [
+      "lagos",
+      "ikeja",
+      "surulere",
+      "lekki",
+      "ajah",
+      "ikorodu",
+      "yaba"
+    ],
+    "sourceTitle": "Nigeria Police Force contact directory (checked April 2026)",
+    "sourceUrl": "https://www.npf.gov.ng/contact/display",
+    "verificationStatus": "official_directory",
+    "divisions": [
+      {
+        "name": "Ikeja",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "ikeja"
+        ]
+      },
+      {
+        "name": "Surulere",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "surulere"
+        ]
+      },
+      {
+        "name": "Yaba",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "yaba"
+        ]
+      },
+      {
+        "name": "Lekki",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "lekki"
+        ]
+      },
+      {
+        "name": "Ikorodu",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "ikorodu"
+        ]
+      },
+      {
+        "name": "Epe",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "epe"
+        ]
+      },
+      {
+        "name": "Badagry",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "badagry"
+        ]
+      }
+    ],
+    "lastVerified": "2026-04-11"
+  },
+  {
+    "state": "Nasarawa",
+    "command": "Nasarawa State Police Command",
+    "pproName": "DSP Ramhan Nansel",
+    "phone": "08037461715",
+    "keywords": [
+      "nasarawa",
+      "lafia",
+      "karu",
+      "keffi"
+    ],
+    "sourceTitle": "Nigeria Police Force contact directory (checked April 2026)",
+    "sourceUrl": "https://www.npf.gov.ng/contact/display",
+    "verificationStatus": "official_directory",
+    "divisions": [
+      {
+        "name": "Lafia",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "lafia"
+        ]
+      },
+      {
+        "name": "Karu",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "karu"
+        ]
+      },
+      {
+        "name": "Keffi",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "keffi"
+        ]
+      }
+    ],
+    "lastVerified": "2026-04-11"
+  },
+  {
+    "state": "Niger",
+    "command": "Niger State Police Command",
+    "pproName": "SP Wasiu A. Abiodun",
+    "phone": "08032233454",
+    "keywords": [
+      "niger",
+      "minna",
+      "suleja",
+      "kontagora"
+    ],
+    "sourceTitle": "Nigeria Police Force contact directory (checked April 2026)",
+    "sourceUrl": "https://www.npf.gov.ng/contact/display",
+    "verificationStatus": "official_directory",
+    "divisions": [
+      {
+        "name": "Minna",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "minna"
+        ]
+      },
+      {
+        "name": "Suleja",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "suleja"
+        ]
+      },
+      {
+        "name": "Kontagora",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "kontagora"
+        ]
+      }
+    ],
+    "lastVerified": "2026-04-11"
+  },
+  {
+    "state": "Ogun",
+    "command": "Ogun State Police Command",
+    "pproName": "DSP Babaseyi Boluwatife",
+    "phone": "08162382281",
+    "keywords": [
+      "ogun",
+      "abeokuta",
+      "ijebu",
+      "ota",
+      "sango"
+    ],
+    "sourceTitle": "Nigeria Police Force contact directory (checked April 2026)",
+    "sourceUrl": "https://www.npf.gov.ng/contact/display",
+    "verificationStatus": "official_directory",
+    "divisions": [
+      {
+        "name": "Eleweran HQ",
+        "contactRole": "Command Headquarters",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Publicly referenced Ogun command coverage point. Route call through the state command line until local unit line is verified.",
+        "keywords": [
+          "eleweran hq"
+        ]
+      },
+      {
+        "name": "Abeokuta",
+        "contactRole": "Area command coverage",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Publicly referenced Ogun command coverage point. Route call through the state command line until local unit line is verified.",
+        "keywords": [
+          "abeokuta"
+        ]
+      },
+      {
+        "name": "Ijebu Ode",
+        "contactRole": "Area command coverage",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Publicly referenced Ogun command coverage point. Route call through the state command line until local unit line is verified.",
+        "keywords": [
+          "ijebu ode"
+        ]
+      },
+      {
+        "name": "Sagamu",
+        "contactRole": "Area command coverage",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Publicly referenced Ogun command coverage point. Route call through the state command line until local unit line is verified.",
+        "keywords": [
+          "sagamu"
+        ]
+      },
+      {
+        "name": "Ota",
+        "contactRole": "Area command coverage",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Publicly referenced Ogun command coverage point. Route call through the state command line until local unit line is verified.",
+        "keywords": [
+          "ota"
+        ]
+      },
+      {
+        "name": "Ilaro",
+        "contactRole": "Area command coverage",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Publicly referenced Ogun command coverage point. Route call through the state command line until local unit line is verified.",
+        "keywords": [
+          "ilaro"
+        ]
+      }
+    ],
+    "lastVerified": "2026-04-11"
+  },
+  {
+    "state": "Ondo",
+    "command": "Ondo State Police Command",
+    "pproName": "DSP Olushola Yinka",
+    "phone": "08132188976",
+    "keywords": [
+      "ondo",
+      "akure",
+      "ondo town",
+      "owo"
+    ],
+    "sourceTitle": "Nigeria Police Force contact directory (checked April 2026)",
+    "sourceUrl": "https://www.npf.gov.ng/contact/display",
+    "verificationStatus": "official_directory",
+    "divisions": [
+      {
+        "name": "Akure",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "akure"
+        ]
+      },
+      {
+        "name": "Ondo Town",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "ondo town"
+        ]
+      },
+      {
+        "name": "Owo",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "owo"
+        ]
+      }
+    ],
+    "lastVerified": "2026-04-11"
+  },
+  {
+    "state": "Osun",
+    "command": "Osun State Police Command",
+    "pproName": "DSP Abiodun Ojolabi",
+    "phone": "07067790040",
+    "keywords": [
+      "osun",
+      "osogbo",
+      "ife",
+      "ilesa"
+    ],
+    "sourceTitle": "Nigeria Police Force contact directory (checked April 2026)",
+    "sourceUrl": "https://www.npf.gov.ng/contact/display",
+    "verificationStatus": "official_directory",
+    "divisions": [
+      {
+        "name": "Osogbo",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "osogbo"
+        ]
+      },
+      {
+        "name": "Ife",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "ife"
+        ]
+      },
+      {
+        "name": "Ilesa",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "ilesa"
+        ]
+      }
+    ],
+    "lastVerified": "2026-04-11"
+  },
+  {
+    "state": "Oyo",
+    "command": "Oyo State Police Command",
+    "pproName": "DSP Ayanlade Olushola A.",
+    "phone": "08132188976",
+    "keywords": [
+      "oyo",
+      "ibadan",
+      "ogbomoso",
+      "saki"
+    ],
+    "sourceTitle": "Nigeria Police Force contact directory (checked April 2026)",
+    "sourceUrl": "https://www.npf.gov.ng/contact/display",
+    "verificationStatus": "official_directory",
+    "divisions": [
+      {
+        "name": "Ibadan",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "ibadan"
+        ]
+      },
+      {
+        "name": "Ogbomoso",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "ogbomoso"
+        ]
+      },
+      {
+        "name": "Oyo",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "oyo"
+        ]
+      },
+      {
+        "name": "Saki",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "saki"
+        ]
+      }
+    ],
+    "lastVerified": "2026-04-11"
+  },
+  {
+    "state": "Plateau",
+    "command": "Plateau State Police Command",
+    "pproName": "SP Alfred Alabo",
+    "phone": "08060545670",
+    "keywords": [
+      "plateau",
+      "jos"
+    ],
+    "sourceTitle": "Nigeria Police Force contact directory (checked April 2026)",
+    "sourceUrl": "https://www.npf.gov.ng/contact/display",
+    "verificationStatus": "official_directory",
+    "divisions": [
+      {
+        "name": "Jos",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "jos"
+        ]
+      }
+    ],
+    "lastVerified": "2026-04-11"
+  },
+  {
+    "state": "Rivers",
+    "command": "Rivers State Police Command",
+    "pproName": "SP Grace Woyengikuro Iringe-Koko",
+    "phone": "08036219523",
+    "keywords": [
+      "rivers",
+      "port harcourt",
+      "ph"
+    ],
+    "sourceTitle": "Nigeria Police Force contact directory (checked April 2026)",
+    "sourceUrl": "https://www.npf.gov.ng/contact/display",
+    "verificationStatus": "official_directory",
+    "divisions": [
+      {
+        "name": "Port Harcourt",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "port harcourt"
+        ]
+      }
+    ],
+    "lastVerified": "2026-04-11"
+  },
+  {
+    "state": "Sokoto",
+    "command": "Sokoto State Police Command",
+    "pproName": "DSP Rufa'i Ahmad",
+    "phone": "08032861946",
+    "keywords": [
+      "sokoto"
+    ],
+    "sourceTitle": "Nigeria Police Force contact directory (checked April 2026)",
+    "sourceUrl": "https://www.npf.gov.ng/contact/display",
+    "verificationStatus": "official_directory",
+    "divisions": [],
+    "lastVerified": "2026-04-11"
+  },
+  {
+    "state": "Taraba",
+    "command": "Taraba State Police Command",
+    "pproName": "ASP Lashen James",
+    "phone": "08141387931",
+    "keywords": [
+      "taraba",
+      "jalingo"
+    ],
+    "sourceTitle": "Nigeria Police Force contact directory (checked April 2026)",
+    "sourceUrl": "https://www.npf.gov.ng/contact/display",
+    "verificationStatus": "official_directory",
+    "divisions": [
+      {
+        "name": "Jalingo",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "jalingo"
+        ]
+      }
+    ],
+    "lastVerified": "2026-04-11"
+  },
+  {
+    "state": "Yobe",
+    "command": "Yobe State Police Command",
+    "pproName": "SP Dungus Abdulkarim",
+    "phone": "08065682446",
+    "keywords": [
+      "yobe",
+      "damaturu"
+    ],
+    "sourceTitle": "Nigeria Police Force contact directory (checked April 2026)",
+    "sourceUrl": "https://www.npf.gov.ng/contact/display",
+    "verificationStatus": "official_directory",
+    "divisions": [
+      {
+        "name": "Damaturu",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "damaturu"
+        ]
+      }
+    ],
+    "lastVerified": "2026-04-11"
+  },
+  {
+    "state": "Zamfara",
+    "command": "Zamfara State Police Command",
+    "pproName": "DSP Yazid Abubakar",
+    "phone": "07046444093",
+    "keywords": [
+      "zamfara",
+      "gusau"
+    ],
+    "sourceTitle": "Nigeria Police Force contact directory (checked April 2026)",
+    "sourceUrl": "https://www.npf.gov.ng/contact/display",
+    "verificationStatus": "official_directory",
+    "divisions": [
+      {
+        "name": "Gusau",
+        "contactRole": "State command escalation line",
+        "localPhone": "",
+        "inheritsStateCommandPhone": true,
+        "verificationStatus": "command_escalation",
+        "notes": "Uses the verified state command line until a public local divisional number is confirmed.",
+        "keywords": [
+          "gusau"
+        ]
+      }
+    ],
+    "lastVerified": "2026-04-11"
+  }
+]

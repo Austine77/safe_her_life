@@ -1,0 +1,35 @@
+SAFEHERLIFE CLEAN DEPLOY GUIDE
+
+1. Open the project in VS Code.
+2. Create `backend/.env` from `backend/.env.example`.
+3. Create `frontend/.env` from `frontend/.env.example`.
+4. Install packages:
+   npm install
+   npm --prefix backend install
+   npm --prefix frontend install
+5. Run backend:
+   npm --prefix backend run dev
+6. Run frontend:
+   npm --prefix frontend run dev
+
+GitHub:
+   git init
+   git branch -M main
+   git add .
+   git commit -m "SafeHerLife updated"
+   git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO.git
+   git push -u origin main
+
+Render backend:
+- Root Directory: backend
+- Build Command: npm install
+- Start Command: npm start
+
+Render frontend:
+- Root Directory: frontend
+- Build Command: npm install && npm run build && cp staff.html dist/staff.html && cp team.html dist/team.html && cp police-contact.html dist/police-contact.html && cp social-worker-contact.html dist/social-worker-contact.html
+- Publish Directory: dist
+
+IMPORTANT:
+- Staff accounts are self-created in staff.html.
+- No default admin or social worker env credentials are used.

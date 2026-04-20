@@ -1,0 +1,18 @@
+SAFEHERLIFE START GUIDE
+
+1. Open backend/.env.example and copy it to backend/.env.
+2. Choose one mode:
+   - Live MongoDB: USE_FILE_DB=false and set MONGODB_URI.
+   - Local fallback: USE_FILE_DB=true.
+3. Start the backend:
+   cd C:\Users\USER\safe_her_life backend
+   npm install
+   npm run dev
+4. Open index.html for public users.
+5. Open staff-portal.html for Admin and Social Worker.
+6. Public flow:
+   - Calculator screen is the home screen.
+   - Create a 4-digit PIN.
+   - Enter the PIN and press = to unlock the icons page.
+
+DO NOT place Admin or Social Worker links on the public index page.

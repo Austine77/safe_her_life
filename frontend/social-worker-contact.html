@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SafeHerLife Social Workers System</title>
+  <link rel="stylesheet" href="./assets/police-contact.css">
+</head>
+<body>
+  <div class="shell">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">SafeHerLife Staff Tool</p>
+        <h1>Nigeria Social Workers & Support System</h1>
+        <p class="subcopy">Search official state support desks, NHRC offices, women affairs contacts, and social welfare escalation contacts for survivor support and referral.</p>
+      </div>
+      <div class="hero-actions">
+        <a class="ghost-btn" href="/staff.html">Back to staff dashboard</a>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="card">
+        <h2>Search support directory</h2>
+        <div class="stack">
+          <div class="field">
+            <label for="stateSelect">Find by state</label>
+            <select id="stateSelect"></select>
+          </div>
+          <div class="field">
+            <label for="directoryInput">Search state, NHRC office, ministry, social welfare, or support desk</label>
+            <input id="directoryInput" type="text" placeholder="Lagos, Edo, NHRC, social welfare, women affairs">
+          </div>
+          <div class="btn-row">
+            <button id="searchDirectoryBtn" type="button" class="secondary-btn">Search directory</button>
+            <button id="loadAllBtn" type="button" class="ghost-btn">Show all states</button>
+          </div>
+          <div class="directory-legend">
+            <span class="badge verified">Official state or federal page</span>
+            <span class="badge escalation">Support escalation contact</span>
+          </div>
+        </div>
+        <div id="directoryStatus" class="status info"></div>
+        <div id="directoryResults" class="accordion-list"></div>
+      </section>
+    </main>
+  </div>
+  <script src="./assets/social-worker-contact.js"></script>
+</body>
+</html>

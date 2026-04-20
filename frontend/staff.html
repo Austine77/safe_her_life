@@ -1,0 +1,1769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SafeHerLife Staff Portal</title>
+<style>
+  :root {
+    --bg: #2b1148;
+    --bg-dark: #200b38;
+    --card: #3a145f;
+    --card-2: #48206f;
+    --accent: #24c3b5;
+    --accent-2: #1d9e93;
+    --danger: #dc6f8a;
+    --danger-2: #c85c77;
+    --text: #ffffff;
+    --muted: #e5dfff;
+    --line: rgba(255,255,255,.15);
+    --line-soft: rgba(255,255,255,.09);
+    --shadow: 0 18px 48px rgba(0,0,0,.28);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+
+  body {
+    min-height: 100vh;
+    font-family: Inter, Arial, sans-serif;
+    color: var(--text);
+    background: linear-gradient(180deg, #2b1148 0%, #351255 46%, #200b38 100%);
+  }
+
+  header {
+    width: min(360px, calc(100% - 28px));
+    margin: 28px auto 22px;
+    padding: 22px;
+    border: 2px solid rgba(255,255,255,.9);
+    border-radius: 20px;
+    text-align: center;
+    background: rgba(255,255,255,.03);
+  }
+
+  header h1 {
+    margin: 0;
+    font-size: clamp(34px, 4.5vw, 46px);
+    letter-spacing: .04em;
+  }
+
+  header p {
+    margin: 8px 0 0;
+    color: var(--muted);
+    font-size: 18px;
+  }
+
+  main {
+    width: min(1380px, calc(100% - 24px));
+    margin: 0 auto;
+    padding: 0 0 26px;
+  }
+
+  .portal-icons,
+  .login-panel,
+  .dashboard {
+    border: 1px solid var(--line);
+    border-radius: 26px;
+    background: linear-gradient(180deg, rgba(58,20,95,.98) 0%, rgba(43,17,72,.98) 100%);
+    box-shadow: var(--shadow);
+  }
+
+  .portal-icons {
+    padding: 24px;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+    min-height: 260px;
+    align-items: center;
+  }
+
+  .icon-card {
+    width: min(280px, 100%);
+    min-height: 220px;
+    border-radius: 24px;
+    border: 1px solid rgba(255,255,255,.2);
+    background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 26px;
+    cursor: pointer;
+    transition: transform .2s ease, border-color .2s ease;
+  }
+
+  .icon-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(255,255,255,.4);
+  }
+
+  .icon-card .emoji {
+    font-size: 42px;
+    margin-bottom: 14px;
+  }
+
+  .icon-card h3 {
+    margin: 0 0 8px;
+    font-size: 28px;
+  }
+
+  .icon-card p {
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .login-panel {
+    display: none;
+    width: min(460px, 100%);
+    margin: 0 auto;
+    padding: 26px;
+  }
+
+  .dashboard {
+    display: none;
+    padding: 24px;
+  }
+
+  .dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 18px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    margin-bottom: 22px;
+  }
+
+  .dashboard-header h2,
+  .panel h3,
+  .login-panel h2 {
+    margin: 0 0 10px;
+  }
+
+  .subcopy {
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 700;
+    background: rgba(36,195,181,.16);
+    border: 1px solid rgba(36,195,181,.35);
+    color: #bffdf8;
+  }
+
+  .btn-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+  }
+
+  button {
+    border: none;
+    border-radius: 14px;
+    padding: 13px 16px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: transform .2s ease, opacity .2s ease;
+  }
+
+  button:hover { transform: translateY(-1px); }
+  button:disabled { opacity: .65; cursor: not-allowed; transform: none; }
+
+  .btn-primary { background: var(--accent); color: #12203d; }
+  .btn-secondary { background: rgba(255,255,255,.1); color: var(--text); border: 1px solid var(--line); }
+  .btn-danger { background: var(--danger); color: var(--text); }
+  .btn-success { background: #3fbf72; color: #fff; }
+
+  .form-grid,
+  .toolbar,
+  .metrics,
+  .dashboard-grid,
+  .detail-grid {
+    display: grid;
+    gap: 16px;
+  }
+
+  .form-grid { grid-template-columns: 1fr; margin-top: 16px; }
+  .toolbar { grid-template-columns: 1.1fr .9fr .9fr auto; margin: 0 0 18px; }
+  .metrics { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); margin-bottom: 18px; }
+  .dashboard-grid { grid-template-columns: 1.15fr .85fr; }
+  .detail-grid { grid-template-columns: 1fr 1fr; }
+
+  .field,
+  .metric-card,
+  .panel,
+  .detail-card,
+  .message {
+    background: rgba(255,255,255,.06);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+  }
+
+  .field,
+  .detail-card,
+  .message,
+  .panel,
+  .metric-card {
+    padding: 16px;
+  }
+
+  .field label {
+    display: block;
+    font-size: 13px;
+    font-weight: 800;
+    margin-bottom: 8px;
+  }
+
+  input,
+  select,
+  textarea {
+    width: 100%;
+    border: 1px solid var(--line);
+    background: rgba(255,255,255,.08);
+    color: var(--text);
+    border-radius: 14px;
+    padding: 13px 14px;
+    outline: none;
+  }
+
+  input::placeholder,
+  textarea::placeholder { color: rgba(255,255,255,.72); }
+  textarea { min-height: 110px; resize: vertical; }
+
+  .metric-card strong {
+    display: block;
+    font-size: 34px;
+    margin-bottom: 8px;
+  }
+
+  .metric-card span,
+  .detail-card small,
+  .message-time {
+    color: var(--muted);
+  }
+
+  .panel h3 { font-size: 28px; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+
+  th, td {
+    text-align: left;
+    padding: 12px 10px;
+    border-bottom: 1px solid var(--line-soft);
+    vertical-align: top;
+  }
+
+  tr[data-case-id] { cursor: pointer; }
+  tr[data-case-id]:hover { background: rgba(255,255,255,.05); }
+
+  .status-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 11px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 800;
+    background: rgba(255,255,255,.1);
+    border: 1px solid var(--line);
+  }
+
+  .priority-high { color: #ffd8d8; }
+  .priority-urgent { color: #ffd0a8; }
+
+  .message-list {
+    display: grid;
+    gap: 12px;
+    max-height: 330px;
+    overflow: auto;
+    padding-right: 4px;
+  }
+
+  .message.staff { background: rgba(36,195,181,.1); }
+  .message.survivor { background: rgba(255,255,255,.1); }
+  .message.system { border-style: dashed; }
+
+  .message strong {
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .status-line {
+    min-height: 26px;
+    margin-top: 14px;
+    font-weight: 800;
+  }
+
+  .status-line.error { color: #ffc3d0; }
+  .status-line.success { color: #bfffe0; }
+  .status-line.info { color: #dbefff; }
+
+  .muted { color: var(--muted); }
+  .hidden { display: none !important; }
+
+  footer {
+    text-align: center;
+    padding: 20px 14px 26px;
+    color: var(--muted);
+    font-weight: 700;
+  }
+
+  @media (max-width: 1080px) {
+    .dashboard-grid,
+    .toolbar,
+    .detail-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 640px) {
+    header { margin-top: 18px; }
+    .portal-icons,
+    .dashboard,
+    .login-panel { padding: 18px; }
+    .icon-card { min-height: 180px; }
+    .panel h3 { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+<div id="liveToast" style="position:fixed; top:18px; right:18px; z-index:9999; max-width:360px; display:none; padding:14px 16px; border-radius:14px; background:rgba(15,23,42,0.96); color:#fff; border:1px solid rgba(255,255,255,0.12); box-shadow:0 18px 40px rgba(0,0,0,0.25);"></div>
+<header>
+  <h1>SafeHerLife</h1>
+  <p>Staff portal access</p>
+</header>
+
+<main>
+  <section class="portal-icons" id="portalIcons">
+    <article class="icon-card" id="adminIcon" tabindex="0" role="button">
+      <div class="emoji">🛡️</div>
+      <h3>Admin</h3>
+      <p>Full case visibility, metrics, assignment review, and secure case messaging.</p>
+    </article>
+    <article class="icon-card" id="workerIcon" tabindex="0" role="button">
+      <div class="emoji">👤</div>
+      <h3>Social Worker</h3>
+      <p>Assigned case queue, trauma-informed follow-up, status updates, and secure chat.</p>
+    </article>
+  </section>
+
+  <section class="login-panel" id="loginPanel">
+    <h2 id="loginTitle">Staff Login</h2>
+    <p class="subcopy" id="loginCopy">Sign in with your staff account or create one below.</p>
+
+    <div class="form-grid">
+      <div class="field">
+        <label for="loginUsername">Username</label>
+        <input id="loginUsername" type="text" placeholder="Enter username">
+      </div>
+      <div class="field">
+        <label for="loginPassword">Password</label>
+        <input id="loginPassword" type="password" placeholder="Enter password">
+      </div>
+    </div>
+
+    <div class="btn-row" style="margin-top:16px;">
+      <button class="btn-primary" id="loginBtn" type="button">Sign In</button>
+      <button class="btn-secondary" id="toggleRegisterBtn" type="button">Create account</button>
+      <button class="btn-danger" id="backBtn" type="button">Back</button>
+    </div>
+    <div class="field" id="registerPanel" style="display:none; margin-top:16px;">
+      <label for="registerUsername">New username</label>
+      <input id="registerUsername" type="text" placeholder="Choose username">
+      <label for="registerPassword" style="margin-top:10px; display:block;">New password</label>
+      <input id="registerPassword" type="password" placeholder="Choose password">
+      <div class="btn-row" style="margin-top:12px;">
+        <button class="btn-success" id="registerBtn" type="button">Create staff account</button>
+      </div>
+    </div>
+    <div class="status-line info" id="loginStatus"></div>
+  </section>
+
+  <section class="dashboard" id="dashboardView">
+    <div class="dashboard-header">
+      <div>
+        <h2 id="dashboardTitle">Dashboard</h2>
+        <p class="subcopy" id="dashboardCopy">Live data from secure service.</p>
+      </div>
+      <div class="btn-row">
+        <span class="badge" id="roleBadge">Secure access</span>
+        <button class="btn-secondary" id="refreshBtn" type="button">Refresh</button>
+
+        <button class="btn-secondary" id="policeContactBtn" type="button">Police contacts</button>
+        <button class="btn-secondary" id="socialWorkerContactBtn" type="button">Contact Social Worker</button>
+<button class="btn-danger" id="logoutBtn" type="button">Logout</button>
+      </div>
+    </div>
+
+    <div class="toolbar">
+      <div class="field">
+        <label for="searchInput">Search by case ID</label>
+        <input id="searchInput" type="text" placeholder="SV-20260326-AB12CD">
+      </div>
+      <div class="field">
+        <label for="statusFilter">Status</label>
+        <select id="statusFilter">
+          <option value="all">All statuses</option>
+          <option value="submitted">Submitted</option>
+          <option value="reviewing">Reviewing</option>
+          <option value="resolved">Resolved</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="priorityFilter">Priority</label>
+        <select id="priorityFilter">
+          <option value="all">All priorities</option>
+          <option value="normal">Normal</option>
+          <option value="high">High</option>
+          <option value="urgent">Urgent</option>
+        </select>
+      </div>
+      <div class="btn-row" style="align-items:end;">
+        <button class="btn-secondary" id="clearFiltersBtn" type="button">Clear</button>
+      </div>
+    </div>
+
+    <div class="metrics" id="metrics"></div>
+
+    <div class="dashboard-grid">
+      <div class="panel">
+        <h3>Case Queue</h3>
+        <p class="subcopy">Submitted cases appear here securely.</p>
+        <div id="tableWrap"><p class="muted">No case data loaded yet.</p></div>
+      </div>
+
+      <div class="panel">
+        <h3>Case Details</h3>
+        <div id="detailWrap"><p class="muted">Select a case to review details.</p></div>
+
+        <div class="field" style="margin-top:16px;">
+          <label for="statusUpdateSelect">Update status</label>
+          <select id="statusUpdateSelect">
+  <option value="submitted">Submitted</option>
+  <option value="open">Case Open</option>
+  <option value="reviewing">Reviewing</option>
+  <option value="closed">Case Closed</option>
+  <option value="resolved">Resolved</option>
+</select>
+        </div>
+
+        <div class="btn-row" style="margin-top:14px;">
+          <button class="btn-primary" id="saveStatusBtn" type="button">Save status</button>
+          <button class="btn-success" id="markResolvedBtn" type="button">Mark resolved</button>
+        </div>
+        <div class="status-line info" id="dashboardStatus"></div>
+      </div>
+    </div>
+
+    <div class="dashboard-grid" style="margin-top:18px;">
+      <div class="panel">
+<h3>Police contact support</h3>
+        <p class="subcopy">Open the Nigeria police contact system to search nearby police stations or call the official state command while managing a case.</p>
+        <div class="btn-row" style="margin-top:14px;">
+          <button class="btn-secondary" id="openPolicePageBtn" type="button">Open police contact system</button>
+        </div>
+      </div>
+      
+      <div class="panel">
+        <h3>Social worker support</h3>
+        <p class="subcopy">Open the Social Workers System to search state support desks and escalation contacts.</p>
+        <div class="btn-row" style="margin-top:14px;">
+          <button class="btn-secondary" id="openSocialWorkerPageBtn" type="button">Open Social Workers System</button>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>Secure Support Chat</h3>
+        <p class="subcopy">Messages for the selected case appear here.</p>
+        <div class="message-list" id="messageList"></div>
+        <div class="field" style="margin-top:16px;">
+          <label for="messageInput">Reply to survivor</label>
+          <textarea id="messageInput" placeholder="Write a secure reply..."></textarea>
+        </div>
+        <div class="detail-card" style="margin-top:16px; border-radius:16px;">
+          <strong>Send a voice note</strong>
+          <div class="btn-row" style="margin-top:12px;">
+            <button class="btn-secondary" id="startReplyVoiceBtn" type="button">Start recording</button>
+            <button class="btn-secondary" id="stopReplyVoiceBtn" type="button" disabled>Stop recording</button>
+            <button class="btn-secondary" id="clearReplyVoiceBtn" type="button" disabled>Clear voice note</button>
+          </div>
+          <div class="field" style="margin-top:12px;">
+            <label for="replyVoiceUpload">Or upload an audio file</label>
+            <input id="replyVoiceUpload" type="file" accept="audio/*" capture="microphone" />
+          </div>
+          <audio id="replyVoicePreview" controls style="width:100%; margin-top:10px; display:none;"></audio>
+          <div class="status-line info" id="replyVoiceStatus" style="margin-top:10px;"></div>
+        </div>
+        <div class="btn-row" style="margin-top:14px;">
+          <button class="btn-primary" id="sendReplyBtn" type="button">Send reply</button>
+          <button class="btn-secondary" id="refreshMessagesBtn" type="button">Refresh chat</button>
+        </div>
+        <div class="status-line info" id="chatStatus"></div>
+      </div>
+
+      <div class="panel">
+        <h3>Follow-up Notes</h3>
+        <div class="field">
+          <label for="noteInput">Internal note</label>
+          <textarea id="noteInput" placeholder="Add a case note for staff follow-up..."></textarea>
+        </div>
+        <div class="btn-row" style="margin-top:14px;">
+          <button class="btn-secondary" id="saveNoteBtn" type="button">Save note</button>
+        </div>
+        <div class="status-line info" id="noteStatus"></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>© 2026 SafeHerLife Staff Portal. All rights reserved.</footer>
+
+<script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
+<script>
+  const API_BASES = (() => {
+    const normalize = (value) => String(value || "").trim().replace(/\/+$/, "");
+    const unique = (values) => [...new Set(values.map(normalize).filter(Boolean))];
+
+    const runtimeCandidates = [
+      window.SAFEHERLIFE_API_BASE_URL,
+      document.documentElement.dataset.apiBase,
+      "https://safeherlife-backend.onrender.com/api",
+      `${window.location.origin}/api`,
+    ];
+
+    const meta = document.querySelector('meta[name="safeherlife-api-base"]')?.getAttribute("content");
+
+    const stored = (() => {
+      try {
+        return (
+          window.localStorage.getItem("safeherlife-working-api-base") ||
+          window.localStorage.getItem("safeherlife-api-base") ||
+          ""
+        );
+      } catch (error) {
+        return "";
+      }
+    })();
+
+    const isLocal =
+      ["localhost", "127.0.0.1"].includes(window.location.hostname) ||
+      window.location.protocol === "file:";
+
+    const localCandidates = [
+      "http://localhost:5000/api",
+      "http://127.0.0.1:5000/api",
+      "http://localhost:5000",
+      "http://127.0.0.1:5000",
+    ];
+
+    return unique([
+      ...runtimeCandidates,
+      meta,
+      stored,
+      ...(isLocal ? localCandidates : []),
+    ]);
+  })();
+
+  const STAFF_KEYS = {
+    role: "safeherlife-staff-role",
+    token: "safeherlife-staff-token",
+    username: "safeherlife-staff-username",
+    selectedCase: "safeherlife-staff-selected-case",
+    view: "safeherlife-staff-view",
+    authenticated: "safeherlife-staff-authenticated",
+  };
+
+  function getPersist(key) {
+    try {
+      return window.localStorage.getItem(key) || window.sessionStorage.getItem(key) || "";
+    } catch (error) {
+      return "";
+    }
+  }
+
+  function setPersist(key, value) {
+    try { window.localStorage.setItem(key, value); } catch (error) {}
+    try { window.sessionStorage.setItem(key, value); } catch (error) {}
+  }
+
+  function removePersist(key) {
+    try { window.localStorage.removeItem(key); } catch (error) {}
+    try { window.sessionStorage.removeItem(key); } catch (error) {}
+  }
+
+  function normalizeApiBase(value) {
+    return String(value || "").trim().replace(/\/+$/, "");
+  }
+
+  function getApiBases() {
+    return [...new Set((state.apiBase ? [state.apiBase, ...API_BASES] : API_BASES).map(normalizeApiBase).filter(Boolean))];
+  }
+
+  function rememberWorkingApiBase(base) {
+    const normalized = normalizeApiBase(base);
+    if (!normalized) return;
+    state.apiBase = normalized;
+    setPersist("safeherlife-working-api-base", normalized);
+    setPersist("safeherlife-api-base", normalized);
+  }
+
+  const state = {
+    role: getPersist(STAFF_KEYS.role) || null,
+    authToken: getPersist(STAFF_KEYS.token) || "",
+    username: getPersist(STAFF_KEYS.username) || "",
+    view: getPersist(STAFF_KEYS.view) || "portal",
+    isAuthenticated: getPersist(STAFF_KEYS.authenticated) === "1",
+    cases: [],
+    selectedCase: null,
+    selectedCaseId: getPersist(STAFF_KEYS.selectedCase) || "",
+    apiBase: getPersist("safeherlife-working-api-base") || API_BASES[0] || `${window.location.origin}/api`,
+    replyVoiceNote: {
+      mimeType: "",
+      dataUrl: "",
+      fileName: "",
+      source: "",
+    },
+    replyVoiceChunks: [],
+    replyMediaRecorder: null,
+  };
+
+  function getSocketBase() {
+    const apiBase = normalizeApiBase(state.apiBase || API_BASES[0] || window.location.origin);
+    return apiBase.replace(/\/api$/i, "");
+  }
+
+  const staffSocket = window.io ? window.io(getSocketBase(), { transports: ["websocket", "polling"] }) : null;
+
+  function setPortalHash(value = "") {
+    try {
+      if (!value) {
+        window.history.replaceState(null, "", window.location.pathname + window.location.search);
+      } else {
+        window.history.replaceState(null, "", `#${value}`);
+      }
+    } catch (error) {}
+  }
+
+  function readPortalHash() {
+    return String(window.location.hash || "").replace(/^#/, "").trim();
+  }
+
+  const portalIcons = document.getElementById("portalIcons");
+  const loginPanel = document.getElementById("loginPanel");
+  const dashboardView = document.getElementById("dashboardView");
+
+  function disableAutoRefill() {
+    document.querySelectorAll("input, textarea, select").forEach((field) => {
+      try {
+        field.setAttribute("autocomplete", "off");
+        field.setAttribute("autocapitalize", "off");
+        field.setAttribute("autocorrect", "off");
+        field.setAttribute("spellcheck", "false");
+      } catch (error) {}
+    });
+  }
+
+  function isCaseChatClosed(caseItem) {
+    const status = String(caseItem?.status || "").toLowerCase();
+    return status === "closed" || status === "resolved";
+  }
+
+  function updateStaffChatAvailability(caseItem) {
+    const chatClosed = isCaseChatClosed(caseItem);
+    const input = document.getElementById("messageInput");
+    const sendBtn = document.getElementById("sendReplyBtn");
+
+    if (input) {
+      input.disabled = chatClosed;
+      input.placeholder = chatClosed
+        ? "This case chat has been closed. Re-open the case to send a reply."
+        : "Write a secure reply...";
+    }
+    if (sendBtn) {
+      sendBtn.disabled = chatClosed;
+    }
+
+    return chatClosed;
+  }
+
+  function setLine(id, text, type = "info") {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.textContent = text || "";
+    el.className = `status-line ${type}`;
+  }
+
+  let liveToastTimer = null;
+  function showLiveToast(message = "") {
+    const toast = document.getElementById("liveToast");
+    if (!toast) return;
+    toast.textContent = message;
+    toast.style.display = "block";
+    window.clearTimeout(liveToastTimer);
+    liveToastTimer = window.setTimeout(() => {
+      toast.style.display = "none";
+    }, 5000);
+  }
+
+  function formatDate(value) {
+    if (!value) return "Not available";
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return String(value);
+    return date.toLocaleString();
+  }
+
+  function escapeHtml(value) {
+    return String(value ?? "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/\"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
+  async function parseJsonResponse(res, apiBase = "") {
+    const text = await res.text();
+    const contentType = (res.headers.get("content-type") || "").toLowerCase();
+    let data = {};
+
+    if (text) {
+      try {
+        data = JSON.parse(text);
+      } catch (error) {
+        const apiError = new Error(
+          res.ok
+            ? `Expected JSON from ${apiBase || "the secure service"}, but received HTML or plain text.`
+            : `Request failed with status ${res.status}`
+        );
+        apiError.status = res.status;
+        apiError.invalidJson = true;
+        apiError.responseText = text.slice(0, 180);
+        apiError.isHtml = /^\s*</.test(text) || contentType.includes("text/html");
+        throw apiError;
+      }
+    }
+
+    if (!res.ok) {
+      const apiError = new Error(data.message || data.error || `Request failed with status ${res.status}`);
+      apiError.status = res.status;
+      apiError.responseText = text.slice(0, 180);
+      throw apiError;
+    }
+    return data;
+  }
+
+  async function fetchJson(path, options = {}, apiBaseOverride = "") {
+    const apiBase = normalizeApiBase(apiBaseOverride || state.apiBase || API_BASES[0] || `${window.location.origin}/api`);
+    const response = await fetch(`${apiBase}${path}`, {
+      ...options,
+      headers: {
+        Accept: "application/json",
+        ...(options.body ? { "Content-Type": "application/json" } : {}),
+        ...(state.authToken ? { Authorization: `Bearer ${state.authToken}` } : {}),
+        ...(options.headers || {}),
+      },
+    });
+    const data = await parseJsonResponse(response, apiBase);
+    rememberWorkingApiBase(apiBase);
+    return data;
+  }
+
+  async function tryRoutes(routes, bodyBuilder) {
+    let lastError = null;
+    for (const apiBase of getApiBases()) {
+      for (const route of routes) {
+        try {
+          const options = { method: route.method || "GET" };
+          if (route.body !== false && typeof bodyBuilder === "function") {
+            const body = bodyBuilder(route);
+            if (body !== undefined) options.body = JSON.stringify(body);
+          }
+          return await fetchJson(route.path, options, apiBase);
+        } catch (error) {
+          lastError = error;
+          const msg = String(error.message || "");
+          const status = Number(error.status || 0);
+          const shouldContinue = Boolean(
+            error.invalidJson ||
+            status === 0 ||
+            status === 404 ||
+            status === 405 ||
+            status >= 500 ||
+            /404|405|500|502|503|Cannot POST|Cannot GET|Cannot PATCH|Cannot PUT|Failed to fetch|NetworkError|Load failed/i.test(msg)
+          );
+          if (!shouldContinue) break;
+        }
+      }
+    }
+    if (lastError?.invalidJson) {
+      throw new Error("Unable to reach the secure service right now. Please try again shortly.");
+    }
+    if (lastError && /Failed to fetch|NetworkError|Load failed/i.test(String(lastError.message || ""))) {
+      throw new Error("Unable to connect to the secure service right now. Please try again shortly.");
+    }
+    throw lastError || new Error("Request failed.");
+  }
+
+  function normalizeCase(payload, fallbackCaseId = "") {
+    const source = payload?.case || payload?.report || payload?.data || payload || {};
+    return {
+      ...source,
+      caseId: source.caseId || source.case_id || source.id || fallbackCaseId,
+      status: String(source.status || source.caseStatus || "submitted").toLowerCase(),
+      incidentType: source.incidentType || source.incident || source.type || "Not specified",
+      location: source.location || source.locationText || source.locationType || source.place || "Not shared",
+      incidentDetails: source.incidentDetails || source.description || source.details || "No details shared.",
+      originalIncidentDetails: source.originalIncidentDetails || source.incidentDetails || source.description || source.details || "No details shared.",
+      voiceNoteUrl: source.voiceNoteUrl || source.voiceNoteData || source.audioUrl || "",
+      voiceNoteMimeType: source.voiceNoteMimeType || "",
+      voiceNoteFileName: source.voiceNoteFileName || "",
+      assignedOfficer: source.assignedOfficer || source.assignedTo || source.officer || source.socialWorker || "socialworker",
+      priority: String(source.priority || "normal").toLowerCase(),
+      submittedAt: source.submittedAt || source.createdAt || source.date || source.timestamp || "",
+      timeline: Array.isArray(source.timeline) ? source.timeline : [],
+      messages: Array.isArray(source.messages)
+        ? source.messages
+        : Array.isArray(source.chat)
+        ? source.chat
+        : [],
+      contact: source.contact || {},
+      reportLanguage: source.reportLanguage || source.language || 'Not specified',
+      communityRiskSnapshot: source.communityRiskSnapshot || source.communityRisk || null,
+      staffNotes: Array.isArray(source.staffNotes) ? source.staffNotes : [],
+    };
+  }
+
+  function normalizeCaseList(payload) {
+    const list = Array.isArray(payload?.cases)
+      ? payload.cases
+      : Array.isArray(payload?.reports)
+      ? payload.reports
+      : Array.isArray(payload?.data)
+      ? payload.data
+      : Array.isArray(payload)
+      ? payload
+      : [];
+    return list.map((item) => normalizeCase(item, item?.caseId || item?.id || ""));
+  }
+
+  function timelineToMessages(caseItem) {
+    const direct = Array.isArray(caseItem?.messages) && caseItem.messages.length ? caseItem.messages : [];
+    if (direct.length) {
+      return direct.map((msg) => ({
+        sender: String(msg.sender || msg.senderRole || msg.role || msg.author || "staff").toLowerCase(),
+        text: msg.text || msg.message || msg.body || msg.note || "",
+        createdAt: msg.createdAt || msg.sentAt || msg.timestamp || "",
+      }));
+    }
+
+    const timeline = Array.isArray(caseItem?.timeline) ? caseItem.timeline : [];
+    return timeline.map((entry) => ({
+      sender: String(entry.sender || entry.role || (entry.note ? "staff" : "system")).toLowerCase(),
+      text: entry.note || entry.message || entry.text || entry.status || "Update saved.",
+      createdAt: entry.createdAt || entry.timestamp || entry.date || "",
+    }));
+  }
+
+  function resetViews(clearSession = false) {
+    setPortalHash("");
+    portalIcons.style.display = "flex";
+    loginPanel.style.display = "none";
+    dashboardView.style.display = "none";
+    state.view = "portal";
+    state.selectedCase = null;
+    state.selectedCaseId = "";
+    state.cases = [];
+    setPersist(STAFF_KEYS.view, "portal");
+    if (clearSession) {
+      state.role = null;
+      state.authToken = "";
+      state.username = "";
+      state.isAuthenticated = false;
+      removePersist(STAFF_KEYS.role);
+      removePersist(STAFF_KEYS.token);
+      removePersist(STAFF_KEYS.username);
+      removePersist(STAFF_KEYS.selectedCase);
+      removePersist(STAFF_KEYS.authenticated);
+    }
+    document.getElementById("loginUsername").value = "";
+    document.getElementById("loginPassword").value = "";
+    document.getElementById("tableWrap").innerHTML = '<p class="muted">No case data loaded yet.</p>';
+    document.getElementById("detailWrap").innerHTML = '<p class="muted">Select a case to review details.</p>';
+    document.getElementById("messageList").innerHTML = '';
+    setLine('loginStatus', '', 'info');
+    document.getElementById('registerUsername').value = '';
+    document.getElementById('registerPassword').value = '';
+    toggleRegisterPanel(false);
+    setLine("dashboardStatus", "", "info");
+    setLine("chatStatus", "", "info");
+    setLine("noteStatus", "", "info");
+    document.getElementById("metrics").innerHTML = '';
+  }
+
+  function showLogin(role) {
+    state.role = role;
+    state.view = "login";
+    setPersist(STAFF_KEYS.role, role);
+    setPersist(STAFF_KEYS.view, "login");
+    setPortalHash(`login-${role}`);
+    portalIcons.style.display = "none";
+    loginPanel.style.display = "block";
+    dashboardView.style.display = "none";
+    document.getElementById("loginTitle").textContent = role === "admin" ? "Admin Login" : "Social Worker Login";
+    document.getElementById("loginCopy").textContent = role === "admin"
+      ? "Use admin credentials to open the full oversight dashboard."
+      : "Use social worker credentials to open the assigned case dashboard.";
+    setLine('loginStatus', '', 'info');
+    document.getElementById('registerUsername').value = '';
+    document.getElementById('registerPassword').value = '';
+    toggleRegisterPanel(false);
+  }
+
+  function openDashboard() {
+    state.view = "dashboard";
+    if (state.role) setPersist(STAFF_KEYS.role, state.role);
+    setPersist(STAFF_KEYS.view, "dashboard");
+    setPortalHash(state.selectedCaseId ? `case-${encodeURIComponent(state.selectedCaseId)}` : "dashboard");
+    portalIcons.style.display = "none";
+    loginPanel.style.display = "none";
+    dashboardView.style.display = "block";
+    document.getElementById("dashboardTitle").textContent = state.role === "admin" ? "Admin Dashboard" : "Social Worker Dashboard";
+    document.getElementById("dashboardCopy").textContent = state.role === "admin"
+      ? "Live case visibility across the full SafeHerLife secure service."
+      : "Assigned case review, status updates, and secure chat.";
+    document.getElementById("roleBadge").textContent = state.role === "admin" ? "Admin access" : "Contact Social Worker";
+  }
+
+
+  function toggleRegisterPanel(forceOpen = null) {
+    const panel = document.getElementById('registerPanel');
+    const shouldOpen = forceOpen === null ? panel.style.display === 'none' : Boolean(forceOpen);
+    panel.style.display = shouldOpen ? 'block' : 'none';
+    document.getElementById('toggleRegisterBtn').textContent = shouldOpen ? 'Hide account form' : 'Create account';
+  }
+
+  async function registerStaffAccount() {
+    const username = document.getElementById('registerUsername').value.trim();
+    const password = document.getElementById('registerPassword').value;
+    if (!username || !password) {
+      setLine('loginStatus', 'Enter a username and password to create the account.', 'error');
+      return;
+    }
+    setLine('loginStatus', 'Creating staff account...', 'info');
+    try {
+      const payload = { username, password, role: state.role === 'admin' ? 'admin' : 'worker' };
+      await tryRoutes([
+        { method: 'POST', path: '/auth/register' },
+      ], () => payload);
+      document.getElementById('loginUsername').value = username;
+      document.getElementById('loginPassword').value = password;
+      document.getElementById('registerUsername').value = '';
+      document.getElementById('registerPassword').value = '';
+      toggleRegisterPanel(false);
+      setLine('loginStatus', 'Account created successfully. You can now sign in.', 'success');
+    } catch (error) {
+      setLine('loginStatus', error.message || 'Unable to create account.', 'error');
+    }
+  }
+
+  async function login() {
+    const username = document.getElementById("loginUsername").value.trim();
+    const password = document.getElementById("loginPassword").value;
+
+    if (!username || !password) {
+      setLine("loginStatus", "Enter both username and password.", "error");
+      return;
+    }
+
+    setLine("loginStatus", "Signing in...", "info");
+
+    try {
+      const payload = { username, password, role: state.role === "admin" ? "admin" : "worker" };
+      const response = await tryRoutes(
+        state.role === "admin"
+          ? [
+              { method: "POST", path: "/auth/admin/login" },
+              { method: "POST", path: "/auth/login" },
+            ]
+          : [
+              { method: "POST", path: "/auth/worker/login" },
+              { method: "POST", path: "/auth/login" },
+            ],
+        () => payload
+      );
+
+      state.authToken = response.token || response.accessToken || response.jwt || "";
+      state.username = username;
+      state.isAuthenticated = true;
+      if (state.authToken) setPersist(STAFF_KEYS.token, state.authToken);
+      setPersist(STAFF_KEYS.username, state.username);
+      if (state.role) setPersist(STAFF_KEYS.role, state.role);
+      setPersist(STAFF_KEYS.authenticated, "1");
+      setLine("loginStatus", "Login successful.", "success");
+      openDashboard();
+      await loadCases();
+    } catch (error) {
+      setLine("loginStatus", error.message || "Login failed.", "error");
+    }
+  }
+
+  function getVisibleCases() {
+    const searchValue = document.getElementById("searchInput").value.trim().toLowerCase();
+    const statusFilter = document.getElementById("statusFilter").value;
+    const priorityFilter = document.getElementById("priorityFilter").value;
+
+    let items = [...state.cases];
+
+    if (state.role === "worker") {
+      items = items.filter((item) => {
+        const assigned = String(item.assignedOfficer || "").toLowerCase();
+        return !assigned || assigned === "socialworker" || assigned === state.username.toLowerCase();
+      });
+    }
+
+    if (searchValue) {
+      items = items.filter((item) => String(item.caseId || "").toLowerCase().includes(searchValue));
+    }
+    if (statusFilter !== "all") {
+      items = items.filter((item) => item.status === statusFilter);
+    }
+    if (priorityFilter !== "all") {
+      items = items.filter((item) => item.priority === priorityFilter);
+    }
+
+    return items;
+  }
+
+  function renderMetrics() {
+    const visible = getVisibleCases();
+    const openStatuses = new Set(["submitted", "open", "reviewing"]);
+    const closedStatuses = new Set(["closed"]);
+    const resolvedStatuses = new Set(["resolved"]);
+    const openCount = visible.filter((item) => openStatuses.has(String(item.status || "").toLowerCase())).length;
+    const closedCount = visible.filter((item) => closedStatuses.has(String(item.status || "").toLowerCase())).length;
+    const highCount = visible.filter((item) => item.priority === "high" || item.priority === "urgent").length;
+    const resolvedCount = visible.filter((item) => resolvedStatuses.has(String(item.status || "").toLowerCase())).length;
+    const activeOfficers = new Set(visible.map((item) => item.assignedOfficer || "socialworker")).size || 1;
+
+    document.getElementById("metrics").innerHTML = `
+      <div class="metric-card"><strong>${visible.length}</strong><span>Total cases</span></div>
+      <div class="metric-card"><strong>${openCount}</strong><span>Case open</span></div>
+      <div class="metric-card"><strong>${closedCount}</strong><span>Case closed</span></div>
+      <div class="metric-card"><strong>${highCount}</strong><span>High priority</span></div>
+      <div class="metric-card"><strong>${activeOfficers}</strong><span>Active officers</span></div>
+      <div class="metric-card"><strong>${resolvedCount}</strong><span>Resolved</span></div>
+    `;
+  }
+
+  function renderTable() {
+    const visible = getVisibleCases();
+    const tableWrap = document.getElementById("tableWrap");
+
+    if (!visible.length) {
+      tableWrap.innerHTML = '<p class="muted">No submitted cases found for the current filters.</p>';
+      return;
+    }
+
+    tableWrap.innerHTML = `
+      <table>
+        <thead>
+          <tr>
+            <th>Case ID</th>
+            <th>Incident</th>
+            <th>Location</th>
+            <th>Status</th>
+            <th>Priority</th>
+            <th>Assigned To</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${visible.map((item) => `
+            <tr data-case-id="${escapeHtml(item.caseId)}">
+              <td>${escapeHtml(item.caseId)}</td>
+              <td>${escapeHtml(item.incidentType)}</td>
+              <td>${escapeHtml(item.location)}</td>
+              <td><span class="status-pill">${escapeHtml(item.status)}</span></td>
+              <td class="${item.priority === 'high' ? 'priority-high' : item.priority === 'urgent' ? 'priority-urgent' : ''}">${escapeHtml(item.priority)}</td>
+              <td>${escapeHtml(item.assignedOfficer || 'socialworker')}</td>
+            </tr>
+          `).join("")}
+        </tbody>
+      </table>
+    `;
+
+    tableWrap.querySelectorAll("tr[data-case-id]").forEach((row) => {
+      row.addEventListener("click", () => selectCase(row.dataset.caseId));
+    });
+  }
+
+  function renderMessages(messages) {
+    const wrap = document.getElementById("messageList");
+    if (!messages.length) {
+      wrap.innerHTML = '<div class="message system"><strong>No messages yet</strong><div class="muted">When survivor or staff messages are saved in the secure service, they will appear here.</div></div>';
+      return;
+    }
+
+    wrap.innerHTML = messages.map((msg) => {
+      const sender = String(msg.sender || "system").toLowerCase();
+      const cssClass = sender.includes("survivor") || sender.includes("user") ? "survivor" : sender.includes("staff") || sender.includes("worker") ? "staff" : "system";
+      const title = cssClass === "survivor" ? "Survivor" : cssClass === "staff" ? "Staff" : "System";
+      const hasText = Boolean(String(msg.text || "").trim());
+      const hasVoice = Boolean(String(msg.voiceNoteUrl || "").trim());
+      return `
+        <div class="message ${cssClass}">
+          <strong>${escapeHtml(title)}</strong>
+          ${hasText ? `<div>${escapeHtml(msg.text || "")}</div>` : `<div><em>Voice note sent</em></div>`}
+          ${hasVoice ? `<audio controls style="width:100%; margin-top:10px;" src="${escapeHtml(msg.voiceNoteUrl)}"></audio>${msg.voiceNoteFileName ? `<div class="message-time">${escapeHtml(msg.voiceNoteFileName)}</div>` : ""}` : ""}
+          <div class="message-time">${escapeHtml(formatDate(msg.createdAt))}</div>
+        </div>
+      `;
+    }).join("");
+  }
+
+  function updateReplyVoicePreview() {
+    const audio = document.getElementById("replyVoicePreview");
+    const clearBtn = document.getElementById("clearReplyVoiceBtn");
+    if (!audio) return;
+    if (state.replyVoiceNote.dataUrl) {
+      audio.src = state.replyVoiceNote.dataUrl;
+      audio.style.display = "block";
+      clearBtn.disabled = false;
+    } else {
+      audio.removeAttribute("src");
+      audio.load();
+      audio.style.display = "none";
+      clearBtn.disabled = true;
+    }
+  }
+
+  function setReplyVoiceNote(data = {}) {
+    state.replyVoiceNote = {
+      mimeType: String(data.mimeType || "audio/webm").trim(),
+      dataUrl: String(data.dataUrl || "").trim(),
+      fileName: String(data.fileName || "staff-voice-note.webm").trim(),
+      source: String(data.source || "recording").trim(),
+    };
+    updateReplyVoicePreview();
+  }
+
+  function clearReplyVoiceNote(message = "Voice note cleared.") {
+    setReplyVoiceNote({ mimeType: "", dataUrl: "", fileName: "", source: "" });
+    const upload = document.getElementById("replyVoiceUpload");
+    if (upload) upload.value = "";
+    if (state.replyMediaRecorder && state.replyMediaRecorder.state !== "inactive") {
+      state.replyMediaRecorder.stop();
+    }
+    if (message) setLine("replyVoiceStatus", message, "info");
+    else setLine("replyVoiceStatus", "", "info");
+  }
+
+  function fileToDataUrl(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(String(reader.result || ""));
+      reader.onerror = () => reject(new Error("Unable to read the selected audio file."));
+      reader.readAsDataURL(file);
+    });
+  }
+
+
+  function getSupportedAudioMimeTypes() {
+    const candidates = [
+      'audio/webm;codecs=opus',
+      'audio/webm',
+      'audio/mp4',
+      'audio/ogg;codecs=opus',
+      'audio/ogg',
+    ];
+    if (!window.MediaRecorder || !MediaRecorder.isTypeSupported) return [''];
+    const supported = candidates.filter((type) => MediaRecorder.isTypeSupported(type));
+    return supported.length ? supported : [''];
+  }
+
+  async function createAudioRecorder(stream) {
+    const mimeTypes = getSupportedAudioMimeTypes();
+    let lastError = null;
+    for (const mimeType of mimeTypes) {
+      try {
+        const recorder = mimeType ? new MediaRecorder(stream, { mimeType }) : new MediaRecorder(stream);
+        return { recorder, mimeType: mimeType || recorder.mimeType || 'audio/webm' };
+      } catch (error) {
+        lastError = error;
+      }
+    }
+    throw lastError || new Error('Audio recording is not supported on this device.');
+  }
+
+  async function requestMicrophoneStream() {
+    const preferred = {
+      audio: {
+        echoCancellation: true,
+        noiseSuppression: true,
+        autoGainControl: true,
+      },
+    };
+    try {
+      return await navigator.mediaDevices.getUserMedia(preferred);
+    } catch (error) {
+      return await navigator.mediaDevices.getUserMedia({ audio: true });
+    }
+  }
+
+  async function startReplyVoiceRecording() {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      setLine("replyVoiceStatus", "This browser does not support microphone recording here. Upload an audio file instead.", "error");
+      return;
+    }
+    try {
+      const stream = await requestMicrophoneStream();
+      const { recorder, mimeType: preferredMimeType } = await createAudioRecorder(stream);
+      state.replyVoiceChunks = [];
+      state.replyMediaRecorder = recorder;
+      recorder.ondataavailable = (event) => {
+        if (event.data && event.data.size > 0) state.replyVoiceChunks.push(event.data);
+      };
+      recorder.onstop = async () => {
+        const mimeType = recorder.mimeType || preferredMimeType || "audio/webm";
+        const blob = new Blob(state.replyVoiceChunks, { type: mimeType });
+        state.replyVoiceChunks = [];
+        stream.getTracks().forEach((track) => track.stop());
+        document.getElementById("startReplyVoiceBtn").disabled = false;
+        document.getElementById("stopReplyVoiceBtn").disabled = true;
+        if (!blob.size) {
+          setLine("replyVoiceStatus", "No voice note was captured. Try again.", "error");
+          return;
+        }
+        const dataUrl = await fileToDataUrl(new File([blob], `staff-voice-note.${mimeType.includes('mp4') ? 'm4a' : mimeType.includes('ogg') ? 'ogg' : 'webm'}`, { type: mimeType }));
+        setReplyVoiceNote({ dataUrl, mimeType, fileName: `staff-voice-note.${mimeType.includes('mp4') ? 'm4a' : mimeType.includes('ogg') ? 'ogg' : 'webm'}`, source: 'recording' });
+        setLine("replyVoiceStatus", "Voice note recorded successfully.", "success");
+      };
+      recorder.onerror = () => {
+        stream.getTracks().forEach((track) => track.stop());
+        document.getElementById("startReplyVoiceBtn").disabled = false;
+        document.getElementById("stopReplyVoiceBtn").disabled = true;
+        setLine("replyVoiceStatus", "Recording failed. Try again or upload an audio file.", "error");
+      };
+      recorder.start();
+      document.getElementById("startReplyVoiceBtn").disabled = true;
+      document.getElementById("stopReplyVoiceBtn").disabled = false;
+      setLine("replyVoiceStatus", "Recording started. Speak clearly, then press stop when finished.", "info");
+    } catch (error) {
+      setLine("replyVoiceStatus", error.message || "Live microphone recording is unavailable here. Use the audio upload option to record from your device instead.", "error");
+    }
+  }
+
+  function stopReplyVoiceRecording() {
+    if (!state.replyMediaRecorder || state.replyMediaRecorder.state === "inactive") {
+      setLine("replyVoiceStatus", "Start recording first before stopping.", "error");
+      return;
+    }
+    state.replyMediaRecorder.stop();
+    setLine("replyVoiceStatus", "Finishing voice note...", "info");
+  }
+
+  async function handleReplyVoiceUpload(event) {
+    const file = event.target.files && event.target.files[0];
+    if (!file) return;
+    try {
+      const dataUrl = await fileToDataUrl(file);
+      setReplyVoiceNote({ dataUrl, mimeType: file.type || "audio/webm", fileName: file.name || "staff-voice-note", source: "upload" });
+      setLine("replyVoiceStatus", "Voice note attached successfully.", "success");
+    } catch (error) {
+      setLine("replyVoiceStatus", error.message || "Unable to attach the audio file.", "error");
+    }
+  }
+
+  function renderDetails(caseItem) {
+    document.getElementById("detailWrap").innerHTML = `
+      <div class="detail-grid">
+        <div class="detail-card"><strong>Case ID</strong><small>${escapeHtml(caseItem.caseId)}</small></div>
+        <div class="detail-card"><strong>Status</strong><small>${escapeHtml(caseItem.status)}</small></div>
+        <div class="detail-card"><strong>Priority</strong><small>${escapeHtml(caseItem.priority)}</small></div>
+        <div class="detail-card"><strong>Assigned to</strong><small>${escapeHtml(caseItem.assignedOfficer || 'socialworker')}</small></div>
+        <div class="detail-card"><strong>Location</strong><small>${escapeHtml(caseItem.location)}</small></div>
+        <div class="detail-card"><strong>Submitted</strong><small>${escapeHtml(formatDate(caseItem.submittedAt))}</small></div>
+        <div class="detail-card"><strong>Report type</strong><small>${escapeHtml(caseItem.reportLanguage || 'Not specified')}</small></div>
+        <div class="detail-card"><strong>Community risk</strong><small>${escapeHtml(caseItem.communityRiskSnapshot?.riskLevel || 'Not available')}</small></div>
+      </div>
+      <div class="detail-card" style="margin-top:16px;">
+        <strong>Incident</strong>
+        <small>${escapeHtml(caseItem.incidentType)}</small>
+      </div>
+      <div class="detail-card" style="margin-top:16px;">
+        <strong>Original report</strong>
+        <small>${escapeHtml(caseItem.originalIncidentDetails || caseItem.incidentDetails)}</small>
+      </div>
+      <div class="detail-card" style="margin-top:16px;">
+        <strong>Voice note</strong>
+        ${caseItem.voiceNoteUrl
+          ? `<audio controls style="width:100%; margin-top:10px;" src="${escapeHtml(caseItem.voiceNoteUrl)}"></audio><small style="display:block; margin-top:8px;">${escapeHtml(caseItem.voiceNoteFileName || 'Attached voice note')}</small>`
+          : `<small>No voice note attached.</small>`}
+      </div>
+      <div class="detail-card" style="margin-top:16px;">
+        <strong>Contact</strong>
+        <small>${escapeHtml(caseItem.contact?.preference === 'anonymous' ? 'Anonymous' : caseItem.contact?.value || 'Anonymous')}</small>
+      </div>
+      <div class="detail-card" style="margin-top:16px;">
+        <strong>AI safety insight</strong>
+        <small>${escapeHtml(caseItem.communityRiskSnapshot?.advisory || 'No insight available yet.')}</small>
+      </div>
+      <div class="detail-card" style="margin-top:16px;">
+        <strong>Internal notes</strong>
+        <small>${Array.isArray(caseItem.staffNotes) && caseItem.staffNotes.length ? caseItem.staffNotes.map((item) => `${escapeHtml(item.authorName || 'Staff')}: ${escapeHtml(item.note || '')}`).join('<br>') : 'No internal notes saved yet.'}</small>
+      </div>
+    `;
+    document.getElementById("statusUpdateSelect").value = caseItem.status || "submitted";
+    const chatClosed = updateStaffChatAvailability(caseItem);
+    if (chatClosed) {
+      setLine("chatStatus", "This case chat is closed. Re-open the case to continue messaging.", "info");
+    }
+  }
+
+  async function loadCases() {
+    setLine("dashboardStatus", "Loading case queue...", "info");
+    try {
+      const payload = await tryRoutes(
+        [
+          { method: "GET", path: "/cases", body: false },
+          { method: "GET", path: "/reports", body: false },
+          { method: "GET", path: "/report/all-reports", body: false },
+        ],
+        () => undefined
+      );
+
+      state.cases = normalizeCaseList(payload);
+      renderMetrics();
+      renderTable();
+      setLine("dashboardStatus", state.cases.length ? "Dashboard synced successfully." : "No submitted cases yet.", state.cases.length ? "success" : "info");
+
+      if (state.selectedCase) {
+        const updated = state.cases.find((item) => item.caseId === state.selectedCase.caseId);
+        if (updated) {
+          await selectCase(updated.caseId);
+        }
+      }
+    } catch (error) {
+      state.cases = [];
+      renderMetrics();
+      renderTable();
+      renderMessages([]);
+      setLine("dashboardStatus", error.message || "Unable to load case queue.", "error");
+    }
+  }
+
+  async function getCaseById(caseId) {
+    const id = String(caseId || "").trim();
+    if (!id) throw new Error("No case selected.");
+
+    try {
+      const single = await tryRoutes(
+        [
+          { method: "GET", path: `/cases/${encodeURIComponent(id)}`, body: false },
+          { method: "GET", path: `/reports/${encodeURIComponent(id)}`, body: false },
+          { method: "GET", path: `/report/${encodeURIComponent(id)}`, body: false },
+          { method: "GET", path: `/report/case/${encodeURIComponent(id)}`, body: false },
+        ],
+        () => undefined
+      );
+      return normalizeCase(single, id);
+    } catch (error) {
+      const match = state.cases.find((item) => item.caseId === id);
+      if (match) return match;
+      throw error;
+    }
+  }
+
+  async function getMessages(caseId) {
+    const id = String(caseId || "").trim();
+    if (!id) return [];
+
+    try {
+      const payload = await tryRoutes(
+        [
+          { method: "GET", path: `/cases/${encodeURIComponent(id)}/messages`, body: false },
+          { method: "GET", path: `/cases/${encodeURIComponent(id)}/chat`, body: false },
+          { method: "GET", path: `/messages/${encodeURIComponent(id)}`, body: false },
+          { method: "GET", path: `/chat/${encodeURIComponent(id)}`, body: false },
+          { method: "GET", path: `/report/${encodeURIComponent(id)}/messages`, body: false },
+        ],
+        () => undefined
+      );
+
+      const items = Array.isArray(payload?.messages)
+        ? payload.messages
+        : Array.isArray(payload?.chat)
+        ? payload.chat
+        : Array.isArray(payload?.data)
+        ? payload.data
+        : Array.isArray(payload)
+        ? payload
+        : [];
+
+      return items.map((msg) => ({
+        sender: String(msg.sender || msg.senderRole || msg.role || msg.author || "staff").toLowerCase(),
+        text: msg.text || msg.message || msg.body || msg.note || "",
+        voiceNoteUrl: msg.voiceNoteUrl || msg.voiceNoteData || msg.audioUrl || msg.audioData || "",
+        voiceNoteMimeType: msg.voiceNoteMimeType || msg.audioMimeType || "",
+        voiceNoteFileName: msg.voiceNoteFileName || msg.audioFileName || "",
+        createdAt: msg.createdAt || msg.sentAt || msg.timestamp || "",
+      }));
+    } catch (error) {
+      const caseItem = await getCaseById(id);
+      return timelineToMessages(caseItem);
+    }
+  }
+
+  async function selectCase(caseId) {
+    try {
+      setLine("dashboardStatus", `Loading ${caseId}...`, "info");
+      const caseItem = await getCaseById(caseId);
+      state.selectedCase = caseItem;
+      state.selectedCaseId = caseItem.caseId || caseId;
+      try {
+        setPersist(STAFF_KEYS.selectedCase, state.selectedCaseId);
+      } catch (error) {}
+      setPortalHash(`case-${encodeURIComponent(state.selectedCaseId)}`);
+      renderDetails(caseItem);
+      const messages = await getMessages(caseId);
+      const chatClosed = updateStaffChatAvailability(caseItem);
+      renderMessages(messages);
+      setLine("dashboardStatus", `${caseId} loaded successfully.`, "success");
+      setLine("chatStatus", chatClosed ? "This case chat is closed. Re-open the case to continue messaging." : (messages.length ? "Chat synced successfully." : "No messages yet for this case."), chatClosed ? "info" : (messages.length ? "success" : "info"));
+    } catch (error) {
+      setLine("dashboardStatus", error.message || "Unable to load case details.", "error");
+    }
+  }
+
+  function upsertCaseInState(rawCase) {
+    const updatedCase = normalizeCase(rawCase, rawCase?.caseId || rawCase?.id || "");
+    const index = state.cases.findIndex((item) => item.caseId === updatedCase.caseId);
+    if (index >= 0) {
+      state.cases[index] = updatedCase;
+    } else {
+      state.cases.unshift(updatedCase);
+    }
+    renderMetrics();
+    renderTable();
+    if (state.selectedCase && state.selectedCase.caseId === updatedCase.caseId) {
+      state.selectedCase = updatedCase;
+      renderDetails(updatedCase);
+    }
+  }
+
+  async function updateCaseStatus(nextStatus) {
+    if (!state.selectedCase) {
+      setLine("dashboardStatus", "Select a case first.", "error");
+      return;
+    }
+
+    setLine("dashboardStatus", `Updating ${state.selectedCase.caseId}...`, "info");
+    const normalizedNextStatus = String(nextStatus || "").toLowerCase();
+    try {
+      const payload = {
+        status: nextStatus,
+        assignedOfficer: state.selectedCase.assignedOfficer || state.username || "socialworker",
+        assignedTo: state.selectedCase.assignedOfficer || state.username || "socialworker",
+        note: `Status updated to ${nextStatus} by ${state.role || 'staff'}.`,
+        latestMessage: normalizedNextStatus === 'closed' ? 'Case chat closed by staff.' : normalizedNextStatus === 'resolved' ? 'Case marked as resolved by staff.' : '',
+      };
+
+      await tryRoutes(
+        [
+          { method: "PATCH", path: `/cases/${encodeURIComponent(state.selectedCase.caseId)}` },
+          { method: "PATCH", path: `/report/${encodeURIComponent(state.selectedCase.caseId)}` },
+          { method: "PUT", path: `/report/${encodeURIComponent(state.selectedCase.caseId)}` },
+        ],
+        () => payload
+      );
+
+      await loadCases();
+      await selectCase(state.selectedCase.caseId);
+      setLine("dashboardStatus", `${state.selectedCase.caseId} updated to ${nextStatus}.`, "success");
+      setLine("chatStatus", normalizedNextStatus === "closed" || normalizedNextStatus === "resolved" ? "Case chat is now closed on both staff and user sides." : "Case chat is active.", normalizedNextStatus === "closed" || normalizedNextStatus === "resolved" ? "info" : "success");
+    } catch (error) {
+      setLine("dashboardStatus", error.message || "Unable to update case.", "error");
+    }
+  }
+
+  async function sendReply() {
+    if (!state.selectedCase) {
+      setLine("chatStatus", "Select a case first.", "error");
+      return;
+    }
+
+    if (isCaseChatClosed(state.selectedCase)) {
+      updateStaffChatAvailability(state.selectedCase);
+      setLine("chatStatus", "This case chat is closed. Change status to Open or Reviewing before replying.", "error");
+      return;
+    }
+
+    const text = document.getElementById('messageInput').value.trim();
+    const hasVoice = Boolean(state.replyVoiceNote.dataUrl);
+    if (!text && !hasVoice) {
+      setLine('chatStatus', 'Type a reply, attach a voice note, or both before sending.', 'error');
+      return;
+    }
+
+    setLine("chatStatus", `Sending reply for ${state.selectedCase.caseId}...`, "info");
+    const messagePayload = {
+      caseId: state.selectedCase.caseId,
+      text,
+      message: text,
+      body: text,
+      voiceNoteData: state.replyVoiceNote.dataUrl,
+      voiceNoteMimeType: state.replyVoiceNote.mimeType,
+      voiceNoteFileName: state.replyVoiceNote.fileName,
+      sender: 'staff',
+      senderName: state.username || (state.role === 'admin' ? 'Admin' : 'Social worker'),
+      role: state.role === 'admin' ? 'admin' : 'socialworker',
+      createdAt: new Date().toISOString(),
+    };
+
+    try {
+      try {
+        await tryRoutes(
+          [
+            { method: "POST", path: `/cases/${encodeURIComponent(state.selectedCase.caseId)}/messages` },
+            { method: "POST", path: `/cases/${encodeURIComponent(state.selectedCase.caseId)}/chat` },
+            { method: "POST", path: `/messages/${encodeURIComponent(state.selectedCase.caseId)}` },
+            { method: "POST", path: `/chat/${encodeURIComponent(state.selectedCase.caseId)}` },
+            { method: "POST", path: `/report/${encodeURIComponent(state.selectedCase.caseId)}/messages` },
+          ],
+          () => messagePayload
+        );
+      } catch (messageError) {
+        await tryRoutes(
+          [
+            { method: "PATCH", path: `/cases/${encodeURIComponent(state.selectedCase.caseId)}` },
+            { method: "PATCH", path: `/report/${encodeURIComponent(state.selectedCase.caseId)}` },
+            { method: "PUT", path: `/report/${encodeURIComponent(state.selectedCase.caseId)}` },
+          ],
+          () => ({
+            status: state.selectedCase.status,
+            assignedOfficer: state.selectedCase.assignedOfficer || state.username || "socialworker",
+            note: text,
+            latestMessage: text,
+            sender: "staff",
+          })
+        );
+      }
+
+      document.getElementById('messageInput').value = '';
+      clearReplyVoiceNote('');
+      await selectCase(state.selectedCase.caseId);
+      setLine("chatStatus", "Reply sent successfully.", "success");
+    } catch (error) {
+      setLine("chatStatus", error.message || "Unable to send reply.", "error");
+    }
+  }
+
+  async function saveNote() {
+    if (!state.selectedCase) {
+      setLine("noteStatus", "Select a case first.", "error");
+      return;
+    }
+    const note = document.getElementById("noteInput").value.trim();
+    if (!note) {
+      setLine("noteStatus", "Type a note before saving.", "error");
+      return;
+    }
+
+    setLine("noteStatus", `Saving note for ${state.selectedCase.caseId}...`, "info");
+    try {
+      await tryRoutes(
+        [
+          { method: 'POST', path: `/cases/${encodeURIComponent(state.selectedCase.caseId)}/internal-note` },
+          { method: 'POST', path: `/report/${encodeURIComponent(state.selectedCase.caseId)}/internal-note` },
+        ],
+        () => ({
+          note,
+          authorRole: state.role === 'admin' ? 'admin' : 'worker',
+          authorName: state.username || (state.role === 'admin' ? 'Admin' : 'Social worker'),
+        })
+      );
+
+      document.getElementById("noteInput").value = "";
+      await selectCase(state.selectedCase.caseId);
+      setLine("noteStatus", "Note saved successfully.", "success");
+    } catch (error) {
+      setLine("noteStatus", error.message || "Unable to save note.", "error");
+    }
+  }
+
+  document.getElementById("adminIcon").addEventListener("click", () => showLogin("admin"));
+  document.getElementById("workerIcon").addEventListener("click", () => showLogin("worker"));
+  document.getElementById("adminIcon").addEventListener("keypress", (event) => {
+    if (event.key === "Enter") showLogin("admin");
+  });
+  document.getElementById("workerIcon").addEventListener("keypress", (event) => {
+    if (event.key === "Enter") showLogin("worker");
+  });
+
+  document.getElementById('loginBtn').addEventListener('click', login);
+  document.getElementById('toggleRegisterBtn').addEventListener('click', () => toggleRegisterPanel());
+  document.getElementById('registerBtn').addEventListener('click', registerStaffAccount);
+  document.getElementById("loginPassword").addEventListener("keydown", (event) => {
+    if (event.key === "Enter") login();
+  });
+  document.getElementById("backBtn").addEventListener("click", () => resetViews(true));
+  document.getElementById("refreshBtn").addEventListener("click", loadCases);
+
+  document.getElementById('policeContactBtn').addEventListener('click', () => {
+    window.location.href = './police-contact.html';
+  });
+  document.getElementById('socialWorkerContactBtn').addEventListener('click', () => {
+    window.location.href = './social-worker-contact.html';
+  });
+
+document.getElementById("logoutBtn").addEventListener("click", () => {
+    state.authToken = "";
+    state.username = "";
+    state.role = null;
+    state.selectedCase = null;
+    state.selectedCaseId = "";
+    state.isAuthenticated = false;
+    removePersist(STAFF_KEYS.token);
+    removePersist(STAFF_KEYS.username);
+    removePersist(STAFF_KEYS.role);
+    removePersist(STAFF_KEYS.selectedCase);
+    removePersist(STAFF_KEYS.authenticated);
+    removePersist(STAFF_KEYS.view);
+    resetViews(true);
+  });
+
+  document.getElementById("clearFiltersBtn").addEventListener("click", () => {
+    document.getElementById("searchInput").value = "";
+    document.getElementById("statusFilter").value = "all";
+    document.getElementById("priorityFilter").value = "all";
+    renderMetrics();
+    renderTable();
+  });
+
+  document.getElementById("searchInput").addEventListener("input", () => {
+    renderMetrics();
+    renderTable();
+  });
+  document.getElementById("statusFilter").addEventListener("change", () => {
+    renderMetrics();
+    renderTable();
+  });
+  document.getElementById("priorityFilter").addEventListener("change", () => {
+    renderMetrics();
+    renderTable();
+  });
+
+  document.getElementById("saveStatusBtn").addEventListener("click", () => {
+    updateCaseStatus(document.getElementById("statusUpdateSelect").value);
+  });
+  document.getElementById("markResolvedBtn").addEventListener("click", () => updateCaseStatus("resolved"));
+  document.getElementById("sendReplyBtn").addEventListener("click", sendReply);
+  document.getElementById("refreshMessagesBtn").addEventListener("click", async () => {
+    if (!state.selectedCase) {
+      setLine("chatStatus", "Select a case first.", "error");
+      return;
+    }
+    const messages = await getMessages(state.selectedCase.caseId);
+    renderMessages(messages);
+    setLine("chatStatus", messages.length ? "Chat refreshed." : "No messages yet for this case.", messages.length ? "success" : "info");
+  });
+  document.getElementById("saveNoteBtn").addEventListener("click", saveNote);
+
+  async function initializePortal() {
+    disableAutoRefill();
+    const hash = readPortalHash();
+    if (hash.startsWith("login-admin")) state.role = "admin";
+    if (hash.startsWith("login-worker")) state.role = "worker";
+    if (hash.startsWith("case-")) {
+      const hashCaseId = decodeURIComponent(hash.slice(5));
+      if (hashCaseId) {
+        state.selectedCaseId = hashCaseId;
+        setPersist(STAFF_KEYS.selectedCase, hashCaseId);
+      }
+      state.view = "dashboard";
+      setPersist(STAFF_KEYS.view, "dashboard");
+    } else if (hash === "dashboard") {
+      state.view = "dashboard";
+      setPersist(STAFF_KEYS.view, "dashboard");
+    } else if (hash.startsWith("login-")) {
+      state.view = "login";
+      setPersist(STAFF_KEYS.view, "login");
+    }
+
+    if (state.view === "login" && state.role && !state.isAuthenticated && !state.authToken && !state.username) {
+      showLogin(state.role);
+      return;
+    }
+
+    if (state.role && (state.authToken || state.username || state.isAuthenticated)) {
+      state.isAuthenticated = true;
+      setPersist(STAFF_KEYS.authenticated, "1");
+      openDashboard();
+      try {
+        await loadCases();
+        if (state.selectedCaseId) {
+          await selectCase(state.selectedCaseId);
+        }
+        setLine("dashboardStatus", state.selectedCaseId ? "Dashboard restored after refresh." : "Dashboard session restored after refresh.", "success");
+      } catch (error) {
+        setLine("dashboardStatus", error.message || "Unable to restore dashboard after refresh.", "error");
+      }
+      return;
+    }
+    resetViews(false);
+  }
+
+  if (staffSocket) {
+    staffSocket.on("case-created", ({ case: newCase }) => {
+      upsertCaseInState(newCase);
+      setLine("dashboardStatus", "New case received live.", "success");
+      showLiveToast(`New report received: ${newCase?.caseId || "Case"}`);
+      if (document.visibilityState !== "visible" && window.Notification && Notification.permission === "granted") {
+        new Notification("SafeHerLife new report", {
+          body: `${newCase?.caseId || "A new case"} was submitted and is ready for review.`,
+        });
+      }
+    });
+
+    staffSocket.on("case-updated", ({ case: updatedCase }) => {
+      upsertCaseInState(updatedCase);
+      if (state.selectedCase && updatedCase && state.selectedCase.caseId === updatedCase.caseId) {
+        selectCase(updatedCase.caseId);
+      }
+      setLine("dashboardStatus", "Case updated live.", "success");
+    });
+
+    staffSocket.on("case-message", ({ case: updatedCase }) => {
+      if (updatedCase) {
+        upsertCaseInState(updatedCase);
+        if (state.selectedCase && state.selectedCase.caseId === updatedCase.caseId) {
+          selectCase(updatedCase.caseId);
+        }
+      }
+      setLine("chatStatus", "New message received live.", "success");
+    });
+  }
+
+  if (window.Notification && Notification.permission === "default") {
+    Notification.requestPermission().catch(() => {});
+  }
+
+  initializePortal();
+</script></body>
+</html>

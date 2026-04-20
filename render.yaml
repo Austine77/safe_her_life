@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: safe_her_life-backend
+    region: node
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: node server.js
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+
+  - type: web
+    name: safe_her_life-frontend
+    env: static
+    rootDir: frontend
+    buildCommand: npm install && npm run build && cp ../frontend/staff.html dist/staff.html && cp ../frontend/team.html dist/team.html && cp ../frontend/police-contact.html dist/police-contact.html && mkdir -p dist/assets && cp ../frontend/assets/police-contact.css dist/assets/police-contact.css && cp ../frontend/assets/police-contact.js dist/assets/police-contact.js && mkdir -p dist/images && cp -r ../frontend/images/. dist/images/
+    staticPublishPath: dist
+    pullRequestPreviewsEnabled: false

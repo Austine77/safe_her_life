@@ -1,0 +1,2787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SafeHerLife</title>
+  <meta name="safe_her_life-api-base" content="https://safeherlife-backend.onrender.com/api">
+  <style>
+    :root {
+      --bg: #f6f7fb;
+      --surface: #ffffff;
+      --surface-2: #f3f5fa;
+      --line: #e2e7f0;
+      --text: #0f1d3d;
+      --muted: #5e6b86;
+      --navy: #173d72;
+      --navy-2: #0f2f61;
+      --purple: #6d34df;
+      --purple-2: #5629b6;
+      --success-bg: #dff3e9;
+      --success-text: #1d6e47;
+      --danger: #d65f7f;
+      --warning: #e6a93f;
+      --radius-xl: 28px;
+      --radius-lg: 22px;
+      --radius-md: 16px;
+      --shadow: 0 18px 48px rgba(19, 44, 83, 0.1);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: Inter, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      padding: 20px 22px 0;
+      flex-wrap: wrap;
+    }
+
+    .container {
+      width: min(1200px, calc(100% - 28px));
+      margin: 0 auto;
+      padding-bottom: 24px;
+    }
+
+    .hero-card,
+    .card,
+    .panel,
+    .chat-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-card,
+    .card,
+    .chat-card {
+      padding: 26px;
+    }
+
+    .screen {
+      display: none;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 16px;
+      padding: 14px 18px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .2s ease, background .2s ease, opacity .2s ease;
+    }
+
+    .btn:hover { transform: translateY(-1px); }
+    .btn:disabled { opacity: .65; cursor: not-allowed; transform: none; }
+    .btn-primary { background: var(--navy); color: #fff; }
+    .btn-secondary { background: var(--purple); color: #fff; }
+    .btn-light { background: var(--surface-2); color: var(--text); border: 1px solid var(--line); }
+    .btn-danger { background: var(--danger); color: #fff; }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 16px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .pill-safe { background: var(--success-bg); color: var(--success-text); }
+    .pill-status { background: #eef2fb; color: var(--navy); }
+
+    h1, h2, h3, h4, p { margin-top: 0; }
+    h1 { font-size: clamp(32px, 5vw, 48px); margin-bottom: 12px; }
+    h2 { font-size: clamp(24px, 3.2vw, 34px); margin-bottom: 12px; }
+    h3 { font-size: 22px; margin-bottom: 10px; }
+    p { line-height: 1.6; color: var(--muted); }
+    strong { color: var(--text); }
+
+    .home-grid,
+    .tracking-grid,
+    .chat-grid,
+    .summary-grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .home-grid { grid-template-columns: 1.3fr .9fr; }
+    .tracking-grid { grid-template-columns: 1.15fr .85fr; }
+    .chat-grid { grid-template-columns: 1.2fr .8fr; }
+    .summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .sidebar-stack { display: grid; gap: 18px; }
+    .language-help { margin-top: 8px; font-size: 13px; color: var(--muted); }
+    .risk-badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .risk-chip {
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: #eef2fb;
+      color: var(--navy);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .button-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+
+    .report-nav-row {
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .report-nav-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-left: auto;
+    }
+
+    .step-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .step-chip {
+      min-width: 42px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: #eef2fb;
+      color: var(--navy);
+      font-size: 13px;
+      font-weight: 700;
+      border: 1px solid #dfe6f4;
+    }
+
+    .step-chip.active {
+      background: var(--navy);
+      color: #fff;
+      border-color: var(--navy);
+    }
+
+    .field-grid {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .field,
+    .option-card,
+    .metric,
+    .timeline-item,
+    .resource-card,
+    .message,
+    .detail-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: var(--surface);
+    }
+
+    .field {
+      padding: 12px 14px;
+      background: var(--surface-2);
+    }
+
+    .field label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      border: 1px solid #cfd7e8;
+      border-radius: 14px;
+      padding: 13px 14px;
+      font-size: 15px;
+      color: var(--text);
+      background: #fff;
+      outline: none;
+    }
+
+    textarea {
+      min-height: 150px;
+      resize: vertical;
+    }
+
+    .option-grid {
+      display: grid;
+      gap: 14px;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      margin-top: 10px;
+    }
+
+    .option-card {
+      padding: 16px;
+      cursor: pointer;
+      transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+    }
+
+    .option-card:hover { transform: translateY(-1px); }
+    .option-card.selected {
+      border-color: var(--purple);
+      box-shadow: 0 10px 22px rgba(109, 52, 223, 0.08);
+      background: #faf7ff;
+    }
+
+    .metric-wrap {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .metric {
+      padding: 18px;
+      background: #fbfcff;
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 30px;
+      margin-bottom: 6px;
+    }
+
+    .case-id {
+      font-size: clamp(32px, 4vw, 54px);
+      font-weight: 900;
+      color: var(--text);
+      letter-spacing: 0.02em;
+      margin: 14px 0;
+      word-break: break-word;
+    }
+
+    .status-box {
+      margin: 16px 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: #eef4ff;
+      color: var(--navy);
+      font-weight: 700;
+    }
+
+    .timeline,
+    .resource-list,
+    .message-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .timeline-item,
+    .resource-card,
+    .message,
+    .detail-card {
+      padding: 16px;
+    }
+
+    .timeline-item small,
+    .muted-small {
+      color: var(--muted);
+      display: block;
+      margin-top: 4px;
+      line-height: 1.5;
+    }
+
+    .message-list {
+      max-height: 420px;
+      overflow: auto;
+      padding-right: 4px;
+    }
+
+    .message.you {
+      background: #f5efff;
+      border-color: #e3d8ff;
+      margin-left: auto;
+    }
+
+    .message.staff {
+      background: #f4f8ff;
+      border-color: #dbe6fb;
+    }
+
+    .message.system {
+      background: #f9fafc;
+      border-style: dashed;
+    }
+
+    .message strong {
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .message-time {
+      margin-top: 8px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .status-text {
+      margin-top: 12px;
+      min-height: 24px;
+      font-weight: 700;
+    }
+
+    .status-text.success { color: var(--success-text); }
+    .status-text.error { color: #b53b59; }
+    .status-text.info { color: var(--navy); }
+
+    .helper-box {
+      padding: 22px;
+      background: linear-gradient(180deg, #122f60 0%, #0d264b 100%);
+      color: #fff;
+      border-radius: var(--radius-xl);
+    }
+
+    .helper-box p,
+    .helper-box li { color: rgba(255,255,255,.88); }
+
+    .helper-box ul {
+      margin: 12px 0 0;
+      padding-left: 18px;
+      line-height: 1.6;
+    }
+
+
+
+.entry-wrapper {
+  min-height: calc(100vh - 36px);
+  display: flex;
+  flex-direction: column;
+}
+
+.entry-brand {
+  text-align: center;
+  color: #ffffff;
+  font-size: clamp(40px, 6vw, 60px);
+  font-weight: 900;
+  margin: 8px 0 18px;
+}
+
+.entry-separator {
+  height: 14px;
+  background: rgba(255,255,255,.92);
+  margin: 0 calc(50% - 50vw);
+}
+
+.entry-center {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 22px 12px 18px;
+}
+
+.entry-card {
+  width: min(520px, 100%);
+  border: 1px solid rgba(255,255,255,.18);
+  border-radius: 34px;
+  background: rgba(10, 28, 94, .18);
+  padding: 18px 18px 14px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.08);
+}
+
+.calc-shell {
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 28px;
+  background: transparent;
+  padding: 18px;
+}
+
+.calc-display {
+  min-height: 88px;
+  border-radius: 20px;
+  background: rgba(6, 20, 74, .18);
+  color: #ffffff;
+  font-size: clamp(36px, 5vw, 50px);
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 18px 16px;
+  overflow: hidden;
+  word-break: break-all;
+  border: 1px solid rgba(255,255,255,.18);
+}
+
+.calc-keypad {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.calc-key {
+  border: none;
+  border-radius: 16px;
+  min-height: 60px;
+  font-size: 20px;
+  font-weight: 900;
+  cursor: pointer;
+  background: #f6f6f7;
+  color: #0f2f61;
+  transition: transform .2s ease, opacity .2s ease;
+}
+
+.calc-key:hover { transform: translateY(-1px); }
+.calc-action {
+  background: #f3f3f3;
+  color: #0f2f61;
+}
+.calc-equals {
+  background: #f3f3f3;
+  color: #0f2f61;
+}
+.calc-zero {
+  grid-column: span 2;
+}
+
+.entry-status {
+  margin: 10px 14px 0;
+  min-height: 24px;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.entry-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  margin: 14px 14px 0;
+}
+
+.entry-btn {
+  border: none;
+  border-radius: 16px;
+  background: #ffffff;
+  color: #0f2f61;
+  padding: 14px 18px;
+  font-size: 15px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.entry-btn.secondary {
+  padding: 12px 18px;
+}
+
+.topbar.is-hidden {
+  display: none;
+}
+
+body.entry-mode {
+  background: #112977;
+}
+
+body.entry-mode .container {
+  width: min(100%, 100%);
+}
+
+body.entry-mode .status-text {
+  color: #ffffff;
+}
+
+body.entry-mode #entryStatus.status-text {
+  margin: 10px 14px 0;
+  min-height: 24px;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+body.entry-mode footer {
+  width: 100%;
+  margin: 0;
+  text-align: center;
+  padding: 18px 14px 16px;
+  color: #ffffff;
+  border: 0;
+  border-top: 14px solid rgba(255,255,255,.92);
+  border-radius: 0;
+  background: #112977;
+  box-shadow: none;
+  font-weight: 800;
+}
+
+.icon-home-grid {
+
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.icon-home-card {
+  text-align: left;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  padding: 20px;
+  background: var(--surface);
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: transform .2s ease, border-color .2s ease;
+}
+
+.icon-home-card:hover {
+  transform: translateY(-2px);
+  border-color: #cbd7ef;
+}
+
+.icon-home-card strong,
+.icon-home-card small {
+  display: block;
+}
+
+.icon-home-card small {
+  margin-top: 8px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.icon-home-emoji {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 58px;
+  height: 58px;
+  border-radius: 18px;
+  background: #eef2fb;
+  margin-bottom: 14px;
+  font-size: 28px;
+}
+
+    footer {
+      width: min(1200px, calc(100% - 28px));
+      margin: 0 auto 18px;
+      text-align: center;
+      padding: 18px;
+      color: var(--text);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      font-weight: 700;
+    }
+
+    @media (max-width: 960px) {
+      .home-grid,
+      .tracking-grid,
+      .chat-grid,
+      .summary-grid,
+      .field-grid,
+      .icon-home-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .topbar { justify-content: stretch; }
+      .topbar .btn { flex: 1 1 100%; }
+      .hero-card, .card, .chat-card { padding: 20px; }
+      .container { width: min(100% - 16px, 1200px); }
+      footer { width: min(100% - 16px, 1200px); }
+      .case-id { font-size: 34px; }
+    }
+  </style>
+</head>
+<body class="entry-mode">
+  <div class="page">
+    <div class="topbar is-hidden">
+      <button class="btn btn-primary" id="returnHomeTop">Return Home</button>
+      <button class="btn btn-secondary" id="quickExitTop">Quick Exit</button>
+    </div>
+
+    <main class="container">
+      
+<section class="screen active" id="screen-entry">
+  <div class="entry-wrapper">
+    <div class="entry-brand">SafeHerLife</div>
+    <div class="entry-separator"></div>
+    <div class="entry-center">
+      <div class="entry-card">
+        <div class="calc-shell">
+          <div class="calc-display" id="calcDisplay">0</div>
+          <div class="calc-keypad">
+            <button class="calc-key calc-action" data-calc-action="clear" type="button">C</button>
+            <button class="calc-key calc-action" data-calc-action="back" type="button">DEL</button>
+            <button class="calc-key calc-action" data-calc-action="divide" type="button">÷</button>
+            <button class="calc-key calc-action" data-calc-action="multiply" type="button">×</button>
+
+            <button class="calc-key" data-calc-value="7" type="button">7</button>
+            <button class="calc-key" data-calc-value="8" type="button">8</button>
+            <button class="calc-key" data-calc-value="9" type="button">9</button>
+            <button class="calc-key calc-action" data-calc-action="minus" type="button">−</button>
+
+            <button class="calc-key" data-calc-value="4" type="button">4</button>
+            <button class="calc-key" data-calc-value="5" type="button">5</button>
+            <button class="calc-key" data-calc-value="6" type="button">6</button>
+            <button class="calc-key calc-action" data-calc-action="plus" type="button">+</button>
+
+            <button class="calc-key" data-calc-value="1" type="button">1</button>
+            <button class="calc-key" data-calc-value="2" type="button">2</button>
+            <button class="calc-key" data-calc-value="3" type="button">3</button>
+            <button class="calc-key calc-equals" data-calc-action="equals" type="button">=</button>
+
+            <button class="calc-key calc-zero" data-calc-value="0" type="button">0</button>
+            <button class="calc-key" data-calc-value="." type="button">.</button>
+            <button class="calc-key calc-action" id="unlockIconsBtn" type="button">PIN</button>
+          </div>
+          <div class="entry-status" id="entryStatus"></div>
+          <div class="entry-actions">
+            <button class="entry-btn" id="createPinBtn" type="button">Create / Change 4-Digit PIN</button>
+            <button class="entry-btn secondary" id="removePinBtn" type="button">Remove PIN</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="screen" id="screen-icons">
+  <div class="home-grid">
+    <div class="hero-card">
+      <span class="pill pill-safe">Icons home</span>
+      <h1 style="margin-top:16px;">Choose an action</h1>
+      <p>After PIN access, users can submit a report, track a case, or open secure support chat.</p>
+
+      <div class="icon-home-grid">
+        <button class="icon-home-card" id="startReportBtn" type="button">
+          <span class="icon-home-emoji">📝</span>
+          <strong>Submit report</strong>
+          <small>Create a real case and send it securely.</small>
+        </button>
+        <button class="icon-home-card" id="openTrackBtn" type="button">
+          <span class="icon-home-emoji">📂</span>
+          <strong>Track case</strong>
+          <small>Open a submitted case with the case ID.</small>
+        </button>
+        <button class="icon-home-card" id="openChatBtn" type="button">
+          <span class="icon-home-emoji">💬</span>
+          <strong>Secure chat</strong>
+          <small>Send a real message linked to the case.</small>
+        </button>
+        <button class="icon-home-card" id="openRightsBtn" type="button">
+          <span class="icon-home-emoji">⚖️</span>
+          <strong>Read Your Rights</strong>
+          <small>Understand your privacy, safety, and support rights before reporting.</small>
+        </button>
+        <button class="icon-home-card" id="openTeamPageBtn" type="button">
+          <span class="icon-home-emoji">🛡️</span>
+          <strong>SafeHerLife</strong>
+          <small>Open the SafeHerLife team page.</small>
+        </button>
+      </div>
+    </div>
+
+    <div class="sidebar-stack">
+      <div class="helper-box">
+        <h3>Track an existing case</h3>
+        <p>Enter the case ID to load live status and secure messages.</p>
+        <div class="field-grid" style="margin-top: 14px;">
+          <div class="field">
+            <label for="lookupCaseId">Case ID</label>
+            <input id="lookupCaseId" type="text" placeholder="" />
+          </div>
+        </div>
+        <div class="button-row">
+          <button class="btn btn-primary" id="trackLookupBtn">Load case</button>
+        </div>
+        <div class="status-text info" id="lookupStatus"></div>
+      </div>
+
+      <div class="card">
+        <h3>Community safety insight</h3>
+        <p>Registered users can check possible dangerous places in their community based on repeated case patterns.</p>
+        <div class="field-grid" style="margin-top: 14px;">
+          <div class="field">
+            <label for="communityAreaInput">Community or area</label>
+            <input id="communityAreaInput" type="text" placeholder="Example: Ikorodu school road" />
+          </div>
+        </div>
+        <div class="button-row">
+          <button class="btn btn-secondary" id="communityRiskBtn" type="button">Check safety insight</button>
+        </div>
+        <div class="status-text info" id="communityRiskStatus"></div>
+        <div class="resource-list" id="communityRiskResult" style="margin-top: 12px;"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="screen" id="screen-rights">
+  <div class="home-grid">
+    <div class="hero-card">
+      <span class="pill pill-safe">Know your rights</span>
+      <h1 style="margin-top:16px;">Read your rights before you report</h1>
+      <p>SafeHerLife is built to help users share reports more safely. This page explains important privacy, safety, and support rights in a clear and professional way.</p>
+
+      <div class="resource-list" style="margin-top:18px;">
+        <div class="resource-card">
+          <strong>1. You can report safely</strong>
+          <small>You can share a report using only the details you are comfortable providing. Anonymous reporting remains available unless you choose to add email or phone contact.</small>
+        </div>
+        <div class="resource-card">
+          <strong>2. You control what you share</strong>
+          <small>You may submit text, a voice note, or both. Avoid adding private details that could put you at risk unless they are necessary for support staff to help.</small>
+        </div>
+        <div class="resource-card">
+          <strong>3. Your case ID matters</strong>
+          <small>After a report is submitted, save your case ID. It lets you track updates and message staff later without exposing your identity publicly.</small>
+        </div>
+        <div class="resource-card">
+          <strong>4. Your privacy should be respected</strong>
+          <small>Only authorized staff should review case details and secure chat messages linked to your case. Use the platform only from a device and location that feels safe.</small>
+        </div>
+        <div class="resource-card">
+          <strong>5. Emergency danger needs urgent help</strong>
+          <small>If you are in immediate danger, move to a safe place and contact emergency services, local authorities, or a trusted person nearby as quickly as possible.</small>
+        </div>
+      </div>
+
+      <div class="button-row">
+        <button class="btn btn-primary" id="rightsStartReportBtn" type="button">Continue to report</button>
+        <button class="btn btn-light" id="rightsBackHomeBtn" type="button">Return Home</button>
+      </div>
+    </div>
+
+    <div class="sidebar-stack">
+      <div class="helper-box">
+        <h3>Safety reminders</h3>
+        <ul>
+          <li>Use quick exit or close the page if someone is watching your screen.</li>
+          <li>Store your case ID in a private place you can access later.</li>
+          <li>Use secure chat only after loading a valid case.</li>
+          <li>Choose anonymous mode if direct contact may expose you.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Need support next?</h3>
+        <p>After reading your rights, you can return to the icons home, open the report form, or track an existing case if you already have a case ID.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="screen" id="screen-report">
+        <div class="card">
+          <div class="section-title">
+            <div>
+              <h2>Share a report</h2>
+              <p>This submits your case securely.</p>
+            </div>
+            <span class="pill pill-status" id="stepLabel">Step 1 of 4</span>
+          </div>
+
+          <div class="step-row">
+            <span class="step-chip active" data-step-chip="1">1</span>
+            <span class="step-chip" data-step-chip="2">2</span>
+            <span class="step-chip" data-step-chip="3">3</span>
+            <span class="step-chip" data-step-chip="4">4</span>
+          </div>
+
+          <div class="report-step" data-step="1">
+            <h3>What happened?</h3>
+            <p>Select the incident type that best matches the situation.</p>
+            <div class="option-grid" id="incidentOptions">
+              <div class="option-card selected" data-value="Neglect">Neglect</div>
+              <div class="option-card" data-value="Physical abuse">Physical abuse</div>
+              <div class="option-card" data-value="Sexual abuse">Sexual abuse</div>
+              <div class="option-card" data-value="Emotional abuse">Emotional abuse</div>
+              <div class="option-card" data-value="Online abuse">Online abuse</div>
+              <div class="option-card" data-value="Other">Other</div>
+            </div>
+          </div>
+
+          <div class="report-step" data-step="2" style="display:none;">
+            <h3>Where did it happen?</h3>
+            <p>You can select a type and add extra details if it is safe.</p>
+            <div class="field-grid">
+              <div class="field">
+                <label for="locationType">Location type</label>
+                <select id="locationType">
+                  <option>Home</option>
+                  <option>School</option>
+                  <option>Community</option>
+                  <option>Online</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="locationText">Town, area, or landmark</label>
+                <input id="locationText" type="text" placeholder="Example: Lagos, Ikorodu, school area" />
+              </div>
+            </div>
+          </div>
+
+          <div class="report-step" data-step="3" style="display:none;">
+            <h3>Describe what happened</h3>
+            <p>Share only what you want staff to review.</p>
+            <div class="field">
+              <label for="incidentDetails">Details</label>
+              <textarea id="incidentDetails" placeholder="Write what happened in your own words..."></textarea>
+            </div>
+            <div class="field-grid" style="margin-top:16px;">
+              <div class="field">
+                <label for="prioritySelect">Priority</label>
+                <select id="prioritySelect">
+                  <option value="normal">Normal</option>
+                  <option value="high">High</option>
+                  <option value="urgent">Urgent</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="anonymousName">Safe display name</label>
+                <input id="anonymousName" type="text" placeholder="Optional name staff can use in chat" />
+              </div>
+            </div>
+            <div class="field" style="margin-top:16px;">
+              <label>Voice note (optional)</label>
+              <div class="field-grid" style="align-items:start; gap:12px;">
+                <div class="field" style="margin:0;">
+                  <button type="button" class="btn btn-light" id="startVoiceNoteBtn">Start recording</button>
+                </div>
+                <div class="field" style="margin:0;">
+                  <button type="button" class="btn btn-secondary" id="stopVoiceNoteBtn" disabled>Stop recording</button>
+                </div>
+                <div class="field" style="margin:0;">
+                  <button type="button" class="btn btn-light" id="clearVoiceNoteBtn" disabled>Clear voice note</button>
+                </div>
+              </div>
+              <div class="language-help">You can submit text only, voice note only, or both.</div>
+              <div class="field" style="margin-top:12px;">
+                <label for="voiceNoteUpload">Or upload an audio file</label>
+                <input id="voiceNoteUpload" type="file" accept="audio/*" capture="microphone" />
+              </div>
+              <div class="field" style="margin-top:12px;">
+                <label for="voiceNotePreview">Voice note preview</label>
+                <audio id="voiceNotePreview" controls style="width:100%; display:none;"></audio>
+              </div>
+              <div class="status-text info" id="voiceNoteStatus"></div>
+            </div>
+          </div>
+
+          <div class="report-step" data-step="4" style="display:none;">
+            <h3>How should a staff contact you?</h3>
+            <p>Anonymous stays on by default unless you choose email or phone.</p>
+            <div class="option-grid" id="contactOptions">
+              <div class="option-card selected" data-contact-mode="anonymous">Remain anonymous</div>
+              <div class="option-card" data-contact-mode="email">Contact me by email</div>
+              <div class="option-card" data-contact-mode="phone">Contact me by phone</div>
+            </div>
+            <div class="field-grid" style="margin-top:16px;">
+              <div class="field">
+                <label for="contactEmail">Email</label>
+                <input id="contactEmail" type="email" placeholder="name@example.com" />
+              </div>
+              <div class="field">
+                <label for="contactPhone">Phone</label>
+                <input id="contactPhone" type="tel" placeholder="0800..." />
+              </div>
+            </div>
+          </div>
+
+          <div class="button-row report-nav-row">
+            <button class="btn btn-primary" id="reportBackBtn">Back</button>
+            <div class="report-nav-actions">
+              <button class="btn btn-primary" id="reportNextBtn">Next</button>
+              <button class="btn btn-secondary" id="submitReportBtn" style="display:none;">Share report securely</button>
+            </div>
+          </div>
+          <div class="status-text info" id="reportStatus"></div>
+        </div>
+      </section>
+
+      <section class="screen" id="screen-case">
+        <div class="hero-card">
+          <span class="pill pill-safe">Report shared safely</span>
+          <h2 style="margin-top:16px;">Your case has been created</h2>
+          <div class="case-id" id="caseIdDisplay">SV-000000</div>
+          <p>A social worker will review your case shortly. Save this ID so you can track updates later without revealing your identity.</p>
+          <div class="button-row">
+            <button class="btn btn-primary" id="goTrackingBtn">Track case</button>
+            <button class="btn btn-secondary" id="copyCaseBtn">Copy case ID</button>
+            <button class="btn btn-light" id="returnHomeBtn">Return Home</button>
+          </div>
+          
+        </div>
+      </section>
+
+      <section class="screen" id="screen-tracking">
+        <div class="tracking-grid">
+          <div class="card">
+            <div class="section-title">
+              <div>
+                <h2 style="margin-bottom:6px;">Case dashboard</h2>
+                <p>Live status for your case.</p>
+              </div>
+              <span class="pill pill-status" id="trackingCaseLabel">No case loaded</span>
+            </div>
+
+            <div class="summary-grid">
+              <div class="detail-card">
+                <strong>Status</strong>
+                <div id="trackingStatusValue" style="margin-top:8px; font-size:20px; font-weight:800;">Not loaded</div>
+              </div>
+              <div class="detail-card">
+                <strong>Assigned officer</strong>
+                <div id="trackingOfficerValue" style="margin-top:8px; font-size:20px; font-weight:800;">Not assigned</div>
+              </div>
+              <div class="detail-card">
+                <strong>Incident type</strong>
+                <div id="trackingIncidentValue" style="margin-top:8px; font-size:18px; font-weight:800;">-</div>
+              </div>
+              <div class="detail-card">
+                <strong>Location</strong>
+                <div id="trackingLocationValue" style="margin-top:8px; font-size:18px; font-weight:800;">-</div>
+              </div>
+            </div>
+
+            <div class="timeline" id="trackingTimeline"></div>
+
+            <div class="button-row">
+              <button class="btn btn-primary" id="openTrackingChatBtn">Message social worker</button>
+              <button class="btn btn-light" id="refreshTrackingBtn">Refresh case</button>
+            </div>
+            <div class="status-text info" id="trackingStatusText"></div>
+          </div>
+
+          <div class="card">
+            <h3>Privacy reminder</h3>
+            <p>Your identity can stay hidden. Only staff with access to the case should review the report and case messages.</p>
+            <div class="resource-list">
+              <div class="resource-card"><strong>Case ID</strong><small id="trackingCaseIdText">-</small></div>
+              <div class="resource-card"><strong>Submitted</strong><small id="trackingSubmittedText">-</small></div>
+              <div class="resource-card"><strong>Description</strong><small id="trackingDescriptionText">-</small></div>
+              <div class="resource-card"><strong>Report type</strong><small id="trackingLanguageText">-</small></div>
+              <div class="resource-card"><strong>Voice note</strong><div id="trackingVoiceNoteWrap" style="margin-top:8px;"><small>No voice note attached.</small></div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen" id="screen-chat">
+        <div class="chat-grid">
+          <div class="chat-card">
+            <div class="section-title">
+              <div>
+                <h2 style="margin-bottom:6px;">Secure support chat</h2>
+                <p>Messages are linked to your case ID and visible in the staff dashboard.</p>
+              </div>
+              <span class="pill pill-safe">Anonymous mode on</span>
+            </div>
+
+            <div class="message-list" id="chatMessages"></div>
+
+            <div class="field" style="margin-top:16px;">
+              <label for="chatInput">Type a secure message</label>
+              <textarea id="chatInput" placeholder="Write a message for the social worker..."></textarea>
+            </div>
+            <div class="voice-note-card" style="margin-top:16px; border:1px solid rgba(18, 74, 147, 0.12); border-radius:18px; padding:16px; background:#f7faff;">
+              <label style="display:block; font-weight:700; margin-bottom:10px;">Send a voice note</label>
+              <div class="button-row">
+                <button class="btn btn-light" id="startChatVoiceNoteBtn" type="button">Start recording</button>
+                <button class="btn btn-light" id="stopChatVoiceNoteBtn" type="button" disabled>Stop recording</button>
+                <button class="btn btn-light" id="clearChatVoiceNoteBtn" type="button" disabled>Clear voice note</button>
+              </div>
+              <div class="field" style="margin-top:12px;">
+                <label for="chatVoiceNoteUpload">Or upload an audio file</label>
+                <input id="chatVoiceNoteUpload" type="file" accept="audio/*" capture="microphone" />
+              </div>
+              <div class="field" style="margin-top:12px;">
+                <label for="chatVoiceNotePreview">Voice note preview</label>
+                <audio id="chatVoiceNotePreview" controls style="width:100%; display:none;"></audio>
+              </div>
+              <div class="status-text info" id="chatVoiceNoteStatus"></div>
+            </div>
+            <div class="button-row">
+              <button class="btn btn-primary" id="sendChatBtn">Send</button>
+              <button class="btn btn-light" id="refreshChatBtn">Refresh chat</button>
+              <button class="btn btn-secondary" id="backToTrackingBtn">Back to case</button>
+            </div>
+            <div class="status-text info" id="chatStatus"></div>
+          </div>
+
+          <div class="card">
+            <h3>Safety tip</h3>
+            <p>If it becomes unsafe to continue, use Quick Exit. This returns the screen to the calculator page.</p>
+            <div class="resource-list">
+              <div class="resource-card"><strong>Current case</strong><small id="chatCaseIdText">-</small></div>
+              <div class="resource-card"><strong>Assigned worker</strong><small id="chatOfficerText">-</small></div>
+            </div>
+            <div class="button-row">
+              <button class="btn btn-danger" id="quickExitPanelBtn">Use Quick Exit</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>© 2026 SafeHerLife. All rights reserved.</footer>
+  </div>
+
+  <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
+<script>
+    const API_BASES = (() => {
+      const normalize = (value) => String(value || "").trim().replace(/\/+$/, "");
+      const unique = (values) => [...new Set(values.map(normalize).filter(Boolean))];
+
+      const runtimeCandidates = [
+        window.SAFEHERLIFE_API_BASE_URL,
+        "https://safeherlife-backend.onrender.com/api",
+        "https://safeherlife-backend.onrender.com/api",
+        "https://safeherlife-backend.onrender.com/api",
+      ];
+      const meta = document.querySelector('meta[name="safe_her_life-api-base"]')?.getAttribute('content');
+
+      const stored = (() => {
+        try {
+          return (
+            window.localStorage.getItem("safe_her_life-working-api-base") ||
+            window.localStorage.getItem("safe_her_life-api-base") ||
+            ""
+          );
+        } catch (error) {
+          return "";
+        }
+      })();
+
+      const isLocal = ["localhost", "127.0.0.1"].includes(window.location.hostname) || window.location.protocol === "file:";
+      const localCandidates = [
+        "http://localhost:5000/api",
+        "http://127.0.0.1:5000/api",
+        "http://localhost:5000",
+        "http://127.0.0.1:5000",
+      ];
+
+      return unique([
+        ...runtimeCandidates,
+        meta,
+        stored,
+        ...(isLocal ? localCandidates : []),
+      ]);
+    })();
+
+const screens = {
+      entry: document.getElementById("screen-entry"),
+      icons: document.getElementById("screen-icons"),
+      rights: document.getElementById("screen-rights"),
+      report: document.getElementById("screen-report"),
+      case: document.getElementById("screen-case"),
+      tracking: document.getElementById("screen-tracking"),
+      chat: document.getElementById("screen-chat"),
+    };
+
+    const ACCESS_PIN_KEY = "safe_her_life-access-pin";
+    const ACCESS_GRANTED_KEY = "safe_her_life-access-granted";
+    const ACTIVE_SCREEN_KEY = "safe_her_life-active-screen";
+    const REPORT_STEP_KEY = "safe_her_life-report-step";
+
+    function readPersistedValue(key, fallback = "") {
+      try {
+        const sessionValue = window.sessionStorage.getItem(key);
+        if (sessionValue !== null && sessionValue !== "") return sessionValue;
+      } catch (error) {}
+      try {
+        const localValue = window.localStorage.getItem(key);
+        if (localValue !== null && localValue !== "") return localValue;
+      } catch (error) {}
+      return fallback;
+    }
+
+    function persistValue(key, value, mode = "both") {
+      try {
+        if (mode === "both" || mode === "session") {
+          if (value === null || value === undefined || value === "") {
+            window.sessionStorage.removeItem(key);
+          } else {
+            window.sessionStorage.setItem(key, value);
+          }
+        }
+      } catch (error) {}
+      try {
+        if (mode === "both" || mode === "local") {
+          if (value === null || value === undefined || value === "") {
+            window.localStorage.removeItem(key);
+          } else {
+            window.localStorage.setItem(key, value);
+          }
+        }
+      } catch (error) {}
+    }
+
+
+    function normalizeApiBase(value) {
+      return String(value || "").trim().replace(/\/+$/, "");
+    }
+
+    function getApiBases() {
+      const dynamic = [
+        state.apiBase,
+        ...API_BASES,
+      ];
+      return [...new Set(dynamic.map(normalizeApiBase).filter(Boolean))];
+    }
+
+    function rememberWorkingApiBase(base) {
+      const normalized = normalizeApiBase(base);
+      if (!normalized) return;
+      state.apiBase = normalized;
+      persistValue("safevoice-working-api-base", normalized, "local");
+      persistValue("safevoice-api-base", normalized, "local");
+    }
+
+    function setClientHash(value = "") {
+      try {
+        const next = value ? `#${value}` : window.location.pathname + window.location.search;
+        window.history.replaceState(null, "", next);
+      } catch (error) {}
+    }
+
+    function readClientHash() {
+      return String(window.location.hash || "").replace(/^#/, "").trim();
+    }
+
+    const state = {
+      reportStep: Number(readPersistedValue(REPORT_STEP_KEY, "1") || "1"),
+      currentCaseId: readPersistedValue("safe_her_life-current-case-id", ""),
+      currentCase: null,
+      accessGranted: readPersistedValue(ACCESS_GRANTED_KEY, "") === "1",
+      calcExpression: "",
+      activeScreen: "entry",
+      apiBase: readPersistedValue("safe_her_life-working-api-base", API_BASES[0] || `${window.location.origin}/api`),
+      voiceNote: {
+        mimeType: "",
+        dataUrl: "",
+        fileName: "",
+        source: "",
+      },
+      mediaRecorder: null,
+      voiceNoteChunks: [],
+      chatVoiceNote: {
+        mimeType: "",
+        dataUrl: "",
+        fileName: "",
+        source: "",
+      },
+      mediaRecorder: null,
+      voiceNoteChunks: [],
+      chatMediaRecorder: null,
+      chatVoiceNoteChunks: [],
+    };
+
+    function getSocketBase() {
+      const apiBase = normalizeApiBase(state.apiBase || API_BASES[0] || `${window.location.origin}/api`);
+      return apiBase.replace(/\/api$/i, "");
+    }
+
+    const clientSocket = window.io ? window.io(getSocketBase(), { transports: ["websocket", "polling"] }) : null;
+
+    function joinCurrentCaseRoom() {
+      if (clientSocket && state.currentCaseId) {
+        clientSocket.emit("join-case", state.currentCaseId);
+      }
+    }
+
+    function leaveCurrentCaseRoom(caseId) {
+      if (clientSocket && caseId) {
+        clientSocket.emit("leave-case", caseId);
+      }
+    }
+
+    function syncChromeForScreen(name) {
+      document.body.classList.toggle("entry-mode", name === "entry");
+      document.querySelector(".topbar")?.classList.toggle("is-hidden", name === "entry");
+      document.getElementById("returnHomeTop")?.classList.toggle("is-hidden", name === "entry" || name === "icons");
+    }
+
+    function clearTrackingLookupField() {
+      const lookupInput = document.getElementById("lookupCaseId");
+      if (lookupInput) {
+        lookupInput.value = "";
+      }
+    }
+
+    function showScreen(name, options = {}) {
+      const { updateHash = true } = options;
+      Object.values(screens).forEach((screen) => screen.classList.remove("active"));
+      if (screens[name]) {
+        screens[name].classList.add("active");
+        state.activeScreen = name;
+        persistValue(ACTIVE_SCREEN_KEY, name, "both");
+
+        if (name !== "entry" && getStoredPin()) {
+          setAccessGranted(true);
+        }
+
+        if (updateHash) {
+          if (name === "entry") {
+            setClientHash("");
+          } else if ((name === "tracking" || name === "chat" || name === "case") && state.currentCaseId) {
+            setClientHash(`${name}:${encodeURIComponent(state.currentCaseId)}`);
+          } else {
+            setClientHash(name);
+          }
+        }
+      }
+      if (["tracking", "chat", "case"].includes(name) && state.currentCaseId) {
+        joinCurrentCaseRoom();
+      }
+      if (name === "icons") {
+        clearTrackingLookupField();
+      }
+      syncChromeForScreen(name);
+    }
+
+    function disableAutoRefill() {
+      document.querySelectorAll("input, textarea, select").forEach((field) => {
+        try {
+          field.setAttribute("autocomplete", "off");
+          field.setAttribute("autocapitalize", "off");
+          field.setAttribute("autocorrect", "off");
+          field.setAttribute("spellcheck", "false");
+        } catch (error) {}
+      });
+    }
+
+    function isCaseChatClosed(caseItem) {
+      const status = String(caseItem?.status || "").toLowerCase();
+      return status === "closed" || status === "resolved";
+    }
+
+    function updateUserChatAvailability(caseItem) {
+      const chatClosed = isCaseChatClosed(caseItem);
+      const chatInput = document.getElementById("chatInput");
+      const sendBtn = document.getElementById("sendChatBtn");
+      const openChatBtn = document.getElementById("openTrackingChatBtn");
+
+      if (chatInput) {
+        chatInput.disabled = chatClosed;
+        chatInput.placeholder = chatClosed
+          ? "This case chat has been closed by staff."
+          : "Write a message for the social worker...";
+      }
+      if (sendBtn) {
+        sendBtn.disabled = chatClosed;
+      }
+      ["chatInput", "startChatVoiceNoteBtn", "stopChatVoiceNoteBtn", "clearChatVoiceNoteBtn", "chatVoiceNoteUpload"].forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) el.disabled = chatClosed || (id === "stopChatVoiceNoteBtn");
+      });
+      if (openChatBtn) {
+        openChatBtn.disabled = chatClosed;
+      }
+
+      return chatClosed;
+    }
+
+    function setStatus(id, message, type = "info") {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.textContent = message || "";
+      el.className = `status-text ${type}`;
+    }
+
+    function formatDate(value) {
+      if (!value) return "Not available";
+      const date = new Date(value);
+      if (Number.isNaN(date.getTime())) return String(value);
+      return date.toLocaleString();
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/\"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    async function parseJsonResponse(res, apiBase = "") {
+      const text = await res.text();
+      const contentType = (res.headers.get("content-type") || "").toLowerCase();
+      let data = {};
+
+      if (text) {
+        try {
+          data = JSON.parse(text);
+        } catch (error) {
+          const apiError = new Error(
+            res.ok
+              ? `Expected a secure service response, but received an unexpected page instead.`
+              : `Request failed with status ${res.status}`
+          );
+          apiError.status = res.status;
+          apiError.invalidJson = true;
+          apiError.responseText = text.slice(0, 180);
+          apiError.isHtml = /^\s*</.test(text) || contentType.includes("text/html");
+          throw apiError;
+        }
+      }
+
+      if (!res.ok) {
+        const apiError = new Error(data.message || data.error || `Request failed with status ${res.status}`);
+        apiError.status = res.status;
+        apiError.responseText = text.slice(0, 180);
+        throw apiError;
+      }
+
+      return data;
+    }
+
+    async function fetchJson(path, options = {}, apiBaseOverride = "") {
+      const apiBase = normalizeApiBase(apiBaseOverride || state.apiBase || API_BASES[0] || `${window.location.origin}/api`);
+      const response = await fetch(`${apiBase}${path}`, {
+        ...options,
+        headers: {
+          Accept: "application/json",
+          ...(options.body ? { "Content-Type": "application/json" } : {}),
+          ...(options.headers || {}),
+        },
+      });
+      const data = await parseJsonResponse(response, apiBase);
+      rememberWorkingApiBase(apiBase);
+      return data;
+    }
+
+    async function requestAcrossApiBases(path, options = {}) {
+      let lastError = null;
+
+      for (const apiBase of getApiBases()) {
+        try {
+          return await fetchJson(path, options, apiBase);
+        } catch (error) {
+          lastError = error;
+          lastError.apiBase = apiBase;
+          const msg = String(error.message || "");
+          const status = Number(error.status || 0);
+          const shouldContinue = Boolean(
+            error.invalidJson ||
+            status === 0 ||
+            status === 404 ||
+            status === 405 ||
+            status >= 500 ||
+            /404|405|500|502|503|Cannot POST|Cannot GET|Cannot PATCH|Cannot PUT|Failed to fetch|NetworkError|Load failed/i.test(msg)
+          );
+          if (!shouldContinue) break;
+        }
+      }
+
+      if (lastError?.invalidJson) {
+        throw new Error("Unable to reach the secure service right now. Please try again shortly.");
+      }
+
+      if (lastError && /Failed to fetch|NetworkError|Load failed/i.test(String(lastError.message || ""))) {
+        throw new Error(`Unable to connect to the secure service right now. Please try again shortly.`);
+      }
+
+      throw lastError || new Error("Request failed.");
+    }
+
+    async function tryRoutes(routes, bodyBuilder) {
+      let lastError = null;
+      for (const route of routes) {
+        try {
+          const options = { method: route.method || "GET" };
+          if (route.body !== false && typeof bodyBuilder === "function") {
+            const body = bodyBuilder(route);
+            if (body !== undefined) options.body = JSON.stringify(body);
+          }
+          return await requestAcrossApiBases(route.path, options);
+        } catch (error) {
+          lastError = error;
+          const msg = String(error.message || "");
+          const status = Number(error.status || 0);
+          const shouldContinue = Boolean(
+            error.invalidJson ||
+            status === 404 ||
+            status === 405 ||
+            status >= 500 ||
+            /404|405|500|502|503|Cannot POST|Cannot GET|Cannot PATCH|Cannot PUT|Failed to fetch|NetworkError|Load failed/i.test(msg)
+          );
+          if (!shouldContinue) break;
+        }
+      }
+      throw lastError || new Error("Request failed.");
+    }
+
+function getStoredPin() {
+  try {
+    return window.localStorage.getItem(ACCESS_PIN_KEY) || "";
+  } catch (error) {
+    return "";
+  }
+}
+
+function setStoredPin(pin) {
+  try {
+    window.localStorage.setItem(ACCESS_PIN_KEY, pin);
+  } catch (error) {}
+}
+
+function removeStoredPin() {
+  try {
+    window.localStorage.removeItem(ACCESS_PIN_KEY);
+  } catch (error) {}
+}
+
+function setAccessGranted(value) {
+  state.accessGranted = !!value;
+  persistValue(ACCESS_GRANTED_KEY, value ? "1" : "", "both");
+}
+
+function goSafeHome(lock = false) {
+  if (lock) {
+    setStatus("lookupStatus", "", "info");
+    setStatus("entryStatus", "Quick Exit used. Enter your 4-digit PIN to open the icons page again.", "info");
+    clearCalculator();
+    showScreen("entry");
+    return;
+  }
+
+  showScreen("icons");
+}
+
+function renderCalcDisplay(value = "") {
+  const display = document.getElementById("calcDisplay");
+  if (!display) return;
+  display.textContent = value || "0";
+}
+
+function clearCalculator() {
+  state.calcExpression = "";
+  renderCalcDisplay("");
+}
+
+function appendCalcValue(value) {
+  if (state.calcExpression === "0" && value !== ".") {
+    state.calcExpression = value;
+  } else {
+    state.calcExpression += value;
+  }
+  renderCalcDisplay(state.calcExpression);
+}
+
+function appendCalcOperator(op) {
+  if (!state.calcExpression) return;
+  if (/[+\-*/.]$/.test(state.calcExpression)) {
+    state.calcExpression = state.calcExpression.slice(0, -1) + op;
+  } else {
+    state.calcExpression += op;
+  }
+  renderCalcDisplay(state.calcExpression);
+}
+
+function evaluateCalculator() {
+  const raw = state.calcExpression.trim();
+  const storedPin = getStoredPin();
+
+  if (/^\d{4}$/.test(raw)) {
+    if (!storedPin) {
+      setStatus("entryStatus", "Create a 4-digit PIN first.", "error");
+      return;
+    }
+    if (raw === storedPin) {
+      setAccessGranted(true);
+      setStatus("entryStatus", "Access granted. Opening icons page...", "success");
+      clearCalculator();
+      window.setTimeout(() => showScreen("icons"), 280);
+      return;
+    }
+    setStatus("entryStatus", "Incorrect PIN. Try again.", "error");
+    clearCalculator();
+    return;
+  }
+
+  if (!raw) return;
+
+  if (!/^[0-9+\-*/().\s]+$/.test(raw)) {
+    setStatus("entryStatus", "Invalid calculator input.", "error");
+    return;
+  }
+
+  try {
+    const result = Function(`"use strict"; return (${raw});`)();
+    const safeValue = Number.isFinite(result) ? String(result) : "Error";
+    state.calcExpression = safeValue === "Error" ? "" : safeValue;
+    renderCalcDisplay(state.calcExpression);
+    setStatus("entryStatus", storedPin ? "Calculator ready. Enter your 4-digit PIN to open the icons page." : "Calculator ready. Create a 4-digit PIN to unlock the icons page.", "info");
+  } catch (error) {
+    setStatus("entryStatus", "Unable to calculate that expression.", "error");
+  }
+}
+
+function createOrChangePin() {
+  const currentPin = getStoredPin();
+  const entered = window.prompt(currentPin ? "Enter a new 4-digit PIN" : "Create a 4-digit PIN", currentPin || "");
+  if (entered === null) return;
+  const cleaned = entered.replace(/\D/g, "").slice(0, 4);
+  if (!/^\d{4}$/.test(cleaned)) {
+    setStatus("entryStatus", "PIN must be exactly 4 digits.", "error");
+    return;
+  }
+  setStoredPin(cleaned);
+  setStatus("entryStatus", "PIN saved. Enter the 4 digits and press = or PIN.", "success");
+  state.calcExpression = cleaned;
+  renderCalcDisplay(state.calcExpression);
+}
+
+function removePin() {
+  removeStoredPin();
+  setAccessGranted(false);
+  clearCalculator();
+  setStatus("entryStatus", "PIN removed. Create a new PIN to unlock the icons page again.", "info");
+  showScreen("entry");
+}
+
+function openIconsWithCurrentInput() {
+  evaluateCalculator();
+}
+
+function initializeEntryScreen() {
+  renderCalcDisplay("");
+
+
+  const storedPin = getStoredPin();
+  setStatus(
+    "entryStatus",
+    storedPin
+      ? "Enter your 4-digit PIN to open the icons page."
+      : "Create / Change your 4-digit PIN first.",
+    "info"
+  );
+}
+
+async function restoreClientScreen() {
+  const storedPin = getStoredPin();
+  const persistedAccess = readPersistedValue(ACCESS_GRANTED_KEY, "") === "1";
+  const rawHash = readClientHash();
+  const persistedScreen = readPersistedValue(ACTIVE_SCREEN_KEY, "entry");
+  const rememberedCaseId = readPersistedValue("safevoice-current-case-id", "");
+  let requestedScreen = rawHash || persistedScreen || "entry";
+  let requestedCaseId = rememberedCaseId || state.currentCaseId || "";
+
+  if (requestedScreen.includes(":")) {
+    const [screenName, encodedCaseId] = requestedScreen.split(":");
+    requestedScreen = screenName || "entry";
+    requestedCaseId = decodeURIComponent(encodedCaseId || "").trim() || requestedCaseId;
+  }
+
+  if (requestedCaseId) {
+    state.currentCaseId = requestedCaseId;
+    persistValue("safevoice-current-case-id", requestedCaseId, "local");
+  }
+
+  const validScreens = new Set(["entry", "icons", "rights", "report", "case", "tracking", "chat"]);
+  if (!validScreens.has(requestedScreen)) {
+    requestedScreen = "entry";
+  }
+
+  const canRestoreProtectedScreen = persistedAccess && !!storedPin;
+  if (requestedScreen !== "entry" && !canRestoreProtectedScreen) {
+    requestedScreen = "entry";
+  }
+
+  if (requestedScreen === "entry") {
+    setAccessGranted(false);
+    clearCalculator();
+    clearTrackingLookupField();
+    showScreen("entry", { updateHash: false });
+    setClientHash("");
+    setStatus(
+      "entryStatus",
+      storedPin
+        ? "Enter your 4-digit PIN to open the icons page."
+        : "Create / Change your 4-digit PIN first.",
+      "info"
+    );
+    return;
+  }
+
+  setAccessGranted(true);
+
+  if (requestedScreen === "tracking" && state.currentCaseId) {
+    await loadTracking(state.currentCaseId, "trackingStatusText");
+    return;
+  }
+
+  if (requestedScreen === "chat" && state.currentCaseId) {
+    await loadChat(state.currentCaseId);
+    return;
+  }
+
+  if (requestedScreen === "case" && state.currentCaseId && !state.currentCase) {
+    try {
+      const restoredCase = await findCaseById(state.currentCaseId);
+      state.currentCase = restoredCase;
+      renderCaseCreated(restoredCase);
+      return;
+    } catch (error) {
+      requestedScreen = "icons";
+    }
+  }
+
+  showScreen(requestedScreen, { updateHash: false });
+  if (requestedScreen === "icons") {
+    clearTrackingLookupField();
+  }
+
+  if (["tracking", "chat", "case"].includes(requestedScreen) && state.currentCaseId) {
+    setClientHash(`${requestedScreen}:${encodeURIComponent(state.currentCaseId)}`);
+  } else if (requestedScreen === "icons") {
+    setClientHash("icons");
+  } else if (requestedScreen === "report") {
+    setClientHash("report");
+  } else {
+    setClientHash("");
+  }
+}
+
+
+    function buildCaseId() {
+      const now = new Date();
+      const y = now.getFullYear();
+      const m = String(now.getMonth() + 1).padStart(2, "0");
+      const d = String(now.getDate()).padStart(2, "0");
+      const random = Math.random().toString(36).slice(2, 8).toUpperCase();
+      return `SV-${y}${m}${d}-${random}`;
+    }
+
+    function getSelectedValue(containerId, fallback = "") {
+      const selected = document.querySelector(`#${containerId} .option-card.selected`);
+      return selected?.dataset.value || selected?.dataset.contactMode || fallback;
+    }
+
+    function normalizeCase(payload, fallbackCaseId = "") {
+      const source = payload?.case || payload?.report || payload?.data || payload || {};
+      return {
+        ...source,
+        caseId: source.caseId || source.case_id || source.id || fallbackCaseId,
+        status: source.status || source.caseStatus || "submitted",
+        incidentType: source.incidentType || source.incident || source.type || "Not specified",
+        location: source.location || source.locationText || source.locationType || source.place || "Not shared",
+        incidentDetails: source.incidentDetails || source.description || source.details || "No details shared.",
+        originalIncidentDetails: source.originalIncidentDetails || source.incidentDetails || source.description || source.details || "No details shared.",
+        voiceNoteUrl: source.voiceNoteUrl || source.voiceNoteData || source.audioUrl || "",
+        voiceNoteMimeType: source.voiceNoteMimeType || "",
+        voiceNoteFileName: source.voiceNoteFileName || "",
+        assignedOfficer: source.assignedOfficer || source.assignedTo || source.officer || source.socialWorker || "Not assigned yet",
+        priority: source.priority || "normal",
+        submittedAt: source.submittedAt || source.createdAt || source.date || source.timestamp || "",
+        timeline: Array.isArray(source.timeline) ? source.timeline : [],
+        messages: Array.isArray(source.messages)
+          ? source.messages
+          : Array.isArray(source.chat)
+          ? source.chat
+          : [],
+        contact: source.contact || {},
+        reportLanguage: source.reportLanguage || source.language || 'Not specified',
+        communityRiskSnapshot: source.communityRiskSnapshot || source.communityRisk || null,
+      };
+    }
+
+    function normalizeCaseList(payload) {
+      const list = Array.isArray(payload?.cases)
+        ? payload.cases
+        : Array.isArray(payload?.reports)
+        ? payload.reports
+        : Array.isArray(payload?.data)
+        ? payload.data
+        : Array.isArray(payload)
+        ? payload
+        : [];
+      return list.map((item) => normalizeCase(item, item?.caseId || item?.id || ""));
+    }
+
+    function timelineToMessages(caseItem) {
+      const direct = Array.isArray(caseItem?.messages) && caseItem.messages.length
+        ? caseItem.messages
+        : [];
+      if (direct.length) {
+        return direct.map((msg) => ({
+          sender: String(msg.sender || msg.senderRole || msg.role || msg.author || "staff").toLowerCase(),
+          text: msg.text || msg.message || msg.body || msg.note || "",
+          createdAt: msg.createdAt || msg.timestamp || msg.sentAt || "",
+        }));
+      }
+
+      const timeline = Array.isArray(caseItem?.timeline) ? caseItem.timeline : [];
+      return timeline
+        .filter((item) => !String(item.visibility || 'public').toLowerCase().includes('internal'))
+        .map((item) => ({
+          sender: String(item.sender || item.role || 'system').toLowerCase(),
+          text: item.note || item.message || item.text || item.status || 'Update saved.',
+          createdAt: item.createdAt || item.timestamp || item.date || '',
+        }));
+    }
+    function updateVoiceNotePreview() {
+      const audio = document.getElementById("voiceNotePreview");
+      const clearBtn = document.getElementById("clearVoiceNoteBtn");
+      if (!audio) return;
+      if (state.voiceNote.dataUrl) {
+        audio.src = state.voiceNote.dataUrl;
+        audio.style.display = "block";
+        clearBtn.disabled = false;
+      } else {
+        audio.removeAttribute("src");
+        audio.load();
+        audio.style.display = "none";
+        clearBtn.disabled = true;
+      }
+    }
+
+    function setVoiceNote(data = {}) {
+      state.voiceNote = {
+        mimeType: String(data.mimeType || "audio/webm").trim(),
+        dataUrl: String(data.dataUrl || "").trim(),
+        fileName: String(data.fileName || "voice-note.webm").trim(),
+        source: String(data.source || "recording").trim(),
+      };
+      updateVoiceNotePreview();
+    }
+
+    function clearVoiceNote(message = "Voice note cleared.") {
+      setVoiceNote({ mimeType: "", dataUrl: "", fileName: "", source: "" });
+      const upload = document.getElementById("voiceNoteUpload");
+      if (upload) upload.value = "";
+      if (state.mediaRecorder && state.mediaRecorder.state !== "inactive") {
+        state.mediaRecorder.stop();
+      }
+      setStatus("voiceNoteStatus", message, "info");
+    }
+
+    async function fileToDataUrl(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(String(reader.result || ""));
+        reader.onerror = () => reject(new Error("Unable to read the selected audio file."));
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function getSupportedAudioMimeTypes() {
+      const candidates = [
+        "audio/webm;codecs=opus",
+        "audio/webm",
+        "audio/mp4",
+        "audio/ogg;codecs=opus",
+        "audio/ogg",
+      ];
+      if (!window.MediaRecorder) return [""];
+      if (!MediaRecorder.isTypeSupported) return [""];
+      const supported = candidates.filter((type) => MediaRecorder.isTypeSupported(type));
+      return supported.length ? supported : [""];
+    }
+
+    async function createAudioRecorder(stream) {
+      const mimeTypes = getSupportedAudioMimeTypes();
+      let lastError = null;
+      for (const mimeType of mimeTypes) {
+        try {
+          const recorder = mimeType ? new MediaRecorder(stream, { mimeType }) : new MediaRecorder(stream);
+          return { recorder, mimeType: mimeType || recorder.mimeType || "audio/webm" };
+        } catch (error) {
+          lastError = error;
+        }
+      }
+      throw lastError || new Error("Audio recording is not supported on this device.");
+    }
+
+    async function requestMicrophoneStream() {
+      const preferred = {
+        audio: {
+          echoCancellation: true,
+          noiseSuppression: true,
+          autoGainControl: true,
+        },
+      };
+      try {
+        return await navigator.mediaDevices.getUserMedia(preferred);
+      } catch (error) {
+        return await navigator.mediaDevices.getUserMedia({ audio: true });
+      }
+    }
+
+    async function startVoiceRecording() {
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        setStatus("voiceNoteStatus", "This browser does not support microphone recording here. You can upload an audio file instead.", "error");
+        return;
+      }
+      try {
+        const stream = await requestMicrophoneStream();
+        const { recorder, mimeType: preferredMimeType } = await createAudioRecorder(stream);
+        state.voiceNoteChunks = [];
+        state.mediaRecorder = recorder;
+        recorder.ondataavailable = (event) => {
+          if (event.data && event.data.size > 0) state.voiceNoteChunks.push(event.data);
+        };
+        recorder.onstop = async () => {
+          const mimeType = recorder.mimeType || preferredMimeType || "audio/webm";
+          const blob = new Blob(state.voiceNoteChunks, { type: mimeType });
+          state.voiceNoteChunks = [];
+          stream.getTracks().forEach((track) => track.stop());
+          document.getElementById("startVoiceNoteBtn").disabled = false;
+          document.getElementById("stopVoiceNoteBtn").disabled = true;
+          if (!blob.size) {
+            setStatus("voiceNoteStatus", "No voice note was captured. Try again.", "error");
+            return;
+          }
+          const dataUrl = await fileToDataUrl(new File([blob], `voice-note.${mimeType.includes('mp4') ? 'm4a' : mimeType.includes('ogg') ? 'ogg' : 'webm'}`, { type: mimeType }));
+          setVoiceNote({ dataUrl, mimeType, fileName: `voice-note.${mimeType.includes('mp4') ? 'm4a' : mimeType.includes('ogg') ? 'ogg' : 'webm'}`, source: 'recording' });
+          setStatus("voiceNoteStatus", "Voice note recorded successfully.", "success");
+        };
+        recorder.onerror = () => {
+          stream.getTracks().forEach((track) => track.stop());
+          document.getElementById("startVoiceNoteBtn").disabled = false;
+          document.getElementById("stopVoiceNoteBtn").disabled = true;
+          setStatus("voiceNoteStatus", "Recording failed. You can try again or upload an audio file.", "error");
+        };
+        recorder.start();
+        document.getElementById("startVoiceNoteBtn").disabled = true;
+        document.getElementById("stopVoiceNoteBtn").disabled = false;
+        setStatus("voiceNoteStatus", "Recording started. Speak clearly, then press stop when finished.", "info");
+      } catch (error) {
+        setStatus("voiceNoteStatus", "Microphone recording could not start here. Use the upload option on your device if recording is blocked.", "error");
+      }
+    }
+
+    function stopVoiceRecording() {
+      if (!state.mediaRecorder || state.mediaRecorder.state === "inactive") {
+        setStatus("voiceNoteStatus", "Start recording first before stopping.", "error");
+        return;
+      }
+      state.mediaRecorder.stop();
+      setStatus("voiceNoteStatus", "Finishing voice note...", "info");
+    }
+
+    async function handleVoiceNoteUpload(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      try {
+        const dataUrl = await fileToDataUrl(file);
+        setVoiceNote({ dataUrl, mimeType: file.type || "audio/webm", fileName: file.name || "voice-note", source: "upload" });
+        setStatus("voiceNoteStatus", "Voice note attached successfully.", "success");
+      } catch (error) {
+        setStatus("voiceNoteStatus", error.message || "Unable to attach the audio file.", "error");
+      }
+    }
+
+    function updateChatVoiceNotePreview() {
+      const audio = document.getElementById("chatVoiceNotePreview");
+      const clearBtn = document.getElementById("clearChatVoiceNoteBtn");
+      if (!audio) return;
+      if (state.chatVoiceNote.dataUrl) {
+        audio.src = state.chatVoiceNote.dataUrl;
+        audio.style.display = "block";
+        clearBtn.disabled = false;
+      } else {
+        audio.removeAttribute("src");
+        audio.load();
+        audio.style.display = "none";
+        clearBtn.disabled = true;
+      }
+    }
+
+    function setChatVoiceNote(data = {}) {
+      state.chatVoiceNote = {
+        mimeType: String(data.mimeType || "audio/webm").trim(),
+        dataUrl: String(data.dataUrl || "").trim(),
+        fileName: String(data.fileName || "chat-voice-note.webm").trim(),
+        source: String(data.source || "recording").trim(),
+      };
+      updateChatVoiceNotePreview();
+    }
+
+    function clearChatVoiceNote(message = "Voice note cleared.") {
+      setChatVoiceNote({ mimeType: "", dataUrl: "", fileName: "", source: "" });
+      const upload = document.getElementById("chatVoiceNoteUpload");
+      if (upload) upload.value = "";
+      if (state.chatMediaRecorder && state.chatMediaRecorder.state !== "inactive") {
+        state.chatMediaRecorder.stop();
+      }
+      if (message) setStatus("chatVoiceNoteStatus", message, "info");
+      else setStatus("chatVoiceNoteStatus", "", "info");
+    }
+
+    async function startChatVoiceRecording() {
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        setStatus("chatVoiceNoteStatus", "This browser does not support microphone recording here. You can upload an audio file instead.", "error");
+        return;
+      }
+      try {
+        const stream = await requestMicrophoneStream();
+        const { recorder, mimeType: preferredMimeType } = await createAudioRecorder(stream);
+        state.chatVoiceNoteChunks = [];
+        state.chatMediaRecorder = recorder;
+        recorder.ondataavailable = (event) => {
+          if (event.data && event.data.size > 0) state.chatVoiceNoteChunks.push(event.data);
+        };
+        recorder.onstop = async () => {
+          const mimeType = recorder.mimeType || preferredMimeType || "audio/webm";
+          const blob = new Blob(state.chatVoiceNoteChunks, { type: mimeType });
+          state.chatVoiceNoteChunks = [];
+          stream.getTracks().forEach((track) => track.stop());
+          document.getElementById("startChatVoiceNoteBtn").disabled = false;
+          document.getElementById("stopChatVoiceNoteBtn").disabled = true;
+          if (!blob.size) {
+            setStatus("chatVoiceNoteStatus", "No voice note was captured. Try again.", "error");
+            return;
+          }
+          const dataUrl = await fileToDataUrl(new File([blob], `chat-voice-note.${mimeType.includes('mp4') ? 'm4a' : mimeType.includes('ogg') ? 'ogg' : 'webm'}`, { type: mimeType }));
+          setChatVoiceNote({ dataUrl, mimeType, fileName: `chat-voice-note.${mimeType.includes('mp4') ? 'm4a' : mimeType.includes('ogg') ? 'ogg' : 'webm'}`, source: 'recording' });
+          setStatus("chatVoiceNoteStatus", "Voice note recorded successfully.", "success");
+        };
+        recorder.onerror = () => {
+          stream.getTracks().forEach((track) => track.stop());
+          document.getElementById("startChatVoiceNoteBtn").disabled = false;
+          document.getElementById("stopChatVoiceNoteBtn").disabled = true;
+          setStatus("chatVoiceNoteStatus", "Recording failed. You can try again or upload an audio file.", "error");
+        };
+        recorder.start();
+        document.getElementById("startChatVoiceNoteBtn").disabled = true;
+        document.getElementById("stopChatVoiceNoteBtn").disabled = false;
+        setStatus("chatVoiceNoteStatus", "Recording started. Speak clearly, then press stop when finished.", "info");
+      } catch (error) {
+        setStatus("chatVoiceNoteStatus", "Microphone recording could not start here. Use the upload option on your device if recording is blocked.", "error");
+      }
+    }
+
+    function stopChatVoiceRecording() {
+      if (!state.chatMediaRecorder || state.chatMediaRecorder.state === "inactive") {
+        setStatus("chatVoiceNoteStatus", "Start recording first before stopping.", "error");
+        return;
+      }
+      state.chatMediaRecorder.stop();
+      setStatus("chatVoiceNoteStatus", "Finishing voice note...", "info");
+    }
+
+    async function handleChatVoiceNoteUpload(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      try {
+        const dataUrl = await fileToDataUrl(file);
+        setChatVoiceNote({ dataUrl, mimeType: file.type || "audio/webm", fileName: file.name || "chat-voice-note", source: "upload" });
+        setStatus("chatVoiceNoteStatus", "Voice note attached successfully.", "success");
+      } catch (error) {
+        setStatus("chatVoiceNoteStatus", error.message || "Unable to attach the audio file.", "error");
+      }
+    }
+
+    function buildSubmitPayload() {
+      const generatedCaseId = buildCaseId();
+      const rawContactMode = getSelectedValue("contactOptions", "anonymous");
+      const contactMode = rawContactMode === "phone" ? "call" : rawContactMode;
+      const email = document.getElementById("contactEmail").value.trim();
+      const phone = document.getElementById("contactPhone").value.trim();
+      const details = document.getElementById("incidentDetails").value.trim();
+      const priorityValue = document.getElementById("prioritySelect").value;
+      const normalizedPriority = priorityValue === "high" || priorityValue === "urgent" ? "High" : "Normal";
+      const safeName = document.getElementById("anonymousName").value.trim();
+      const hasVoiceNote = Boolean(state.voiceNote.dataUrl);
+
+      const payload = {
+        caseId: generatedCaseId,
+        incidentType: getSelectedValue("incidentOptions", "Neglect"),
+        locationType: document.getElementById("locationType").value,
+        location: document.getElementById("locationText").value.trim(),
+        incidentDetails: details,
+        description: details,
+        originalIncidentDetails: details,
+        voiceNoteData: state.voiceNote.dataUrl,
+        voiceNoteMimeType: state.voiceNote.mimeType,
+        voiceNoteFileName: state.voiceNote.fileName,
+        priority: normalizedPriority,
+        reporterName: safeName,
+        reportLanguage: hasVoiceNote ? "Voice note attached" : "Text report",
+        contactPreference: contactMode,
+        email,
+        phone,
+        contact: {
+          preference: contactMode,
+          value:
+            contactMode === "email"
+              ? email
+              : contactMode === "call" || contactMode === "sms"
+              ? phone
+              : "",
+        },
+        evidence: {
+          photos: 0,
+          screenshots: 0,
+          audioNotes: hasVoiceNote ? 1 : 0,
+        },
+        status: "Submitted",
+        submittedAt: new Date().toISOString(),
+      };
+
+      if (!payload.location) {
+        payload.location = payload.locationType;
+      }
+
+      if (!payload.reporterName && contactMode === "anonymous") {
+        payload.reporterName = "Anonymous user";
+      }
+
+      return payload;
+    }
+
+
+    function buildSubmitPayloadVariants(basePayload) {
+      const locationText = basePayload.location || basePayload.locationType || "";
+      const contactValue =
+        basePayload.contact?.value ||
+        (basePayload.contactPreference === "email" ? basePayload.email : basePayload.phone) ||
+        "";
+
+      return [
+        {
+          ...basePayload,
+        },
+        {
+          caseId: basePayload.caseId,
+          incidentType: basePayload.incidentType,
+          incident: basePayload.incidentType,
+          reportType: basePayload.incidentType,
+          category: basePayload.incidentType,
+          location: locationText,
+          locationType: basePayload.locationType,
+          details: basePayload.incidentDetails,
+          incidentDetails: basePayload.incidentDetails,
+          description: basePayload.description,
+          originalIncidentDetails: basePayload.originalIncidentDetails,
+          voiceNoteData: basePayload.voiceNoteData,
+          voiceNoteMimeType: basePayload.voiceNoteMimeType,
+          voiceNoteFileName: basePayload.voiceNoteFileName,
+          priority: basePayload.priority,
+          urgency: basePayload.priority,
+          reporterName: basePayload.reporterName,
+          anonymousName: basePayload.reporterName,
+          contactPreference: basePayload.contactPreference,
+          contactMethod: basePayload.contactPreference,
+          email: basePayload.email,
+          phone: basePayload.phone,
+          contactValue,
+          status: basePayload.status,
+          submittedAt: basePayload.submittedAt,
+        },
+        {
+          caseId: basePayload.caseId,
+          report: {
+            ...basePayload,
+            details: basePayload.incidentDetails,
+            originalIncidentDetails: basePayload.originalIncidentDetails,
+            voiceNoteData: basePayload.voiceNoteData,
+            voiceNoteMimeType: basePayload.voiceNoteMimeType,
+            voiceNoteFileName: basePayload.voiceNoteFileName,
+            contactValue,
+          },
+        },
+      ];
+    }
+
+    async function postCaseWithFallback(basePayload) {
+      const routes = [
+        { method: "POST", path: "/report/submit-report" },
+        { method: "POST", path: "/report/submit" },
+        { method: "POST", path: "/cases" },
+        { method: "POST", path: "/reports" },
+      ];
+
+      const payloadVariants = buildSubmitPayloadVariants(basePayload);
+      let lastError = null;
+
+      for (const route of routes) {
+        for (const variant of payloadVariants) {
+          let payload = { ...variant };
+
+          try {
+            return await requestAcrossApiBases(route.path, {
+              method: route.method,
+              body: JSON.stringify(payload),
+            });
+          } catch (error) {
+            lastError = error;
+            console.warn(`Create case failed on ${route.path}:`, error);
+
+            if (Number(error?.status || 0) === 409) {
+              payload.caseId = buildCaseId();
+              try {
+                return await requestAcrossApiBases(route.path, {
+                  method: route.method,
+                  body: JSON.stringify(payload),
+                });
+              } catch (retryError) {
+                lastError = retryError;
+              }
+            }
+
+            const message = String(error?.message || "");
+            const status = Number(error?.status || 0);
+            const shouldTryNext = Boolean(
+              error?.invalidJson ||
+              status === 404 ||
+              status === 405 ||
+              status >= 500 ||
+              /Unable to create case report|Cannot POST|Cannot GET|Request failed|NetworkError|Failed to fetch|Load failed/i.test(message)
+            );
+
+            if (!shouldTryNext) {
+              break;
+            }
+          }
+        }
+      }
+
+      if (lastError && /Could not connect to the secure service/i.test(String(lastError.message || ""))) {
+        throw lastError;
+      }
+
+      throw lastError || new Error("Unable to create case report.");
+    }
+
+    async function submitCase() {
+      const details = document.getElementById("incidentDetails").value.trim();
+      const hasVoiceNote = Boolean(state.voiceNote.dataUrl);
+      if (!details && !hasVoiceNote) {
+        setStatus("reportStatus", "Add report text, a voice note, or both before submitting.", "error");
+        return;
+      }
+
+      const basePayload = buildSubmitPayload();
+      const submitBtn = document.getElementById("submitReportBtn");
+      submitBtn.disabled = true;
+      setStatus("reportStatus", `Preparing your report...`, "info");
+
+      try {
+        const payload = basePayload;
+        setStatus("reportStatus", `Submitting your report securely...`, "info");
+        const response = await postCaseWithFallback(payload);
+        const savedCase = normalizeCase(response, payload.caseId);
+        if (!savedCase.caseId) savedCase.caseId = payload.caseId;
+        state.currentCase = savedCase;
+        state.currentCaseId = savedCase.caseId;
+        persistValue("safevoice-current-case-id", state.currentCaseId, "local");
+        renderCaseCreated(savedCase);
+        setStatus("reportStatus", "Report submitted successfully.", "success");
+        showScreen("case");
+      } catch (error) {
+        console.error("submitCase failed:", error);
+        const fallbackMessage = String(error?.message || "").includes("TypeError: next is not a function")
+          ? "Your secure service case model is failing during validation. Fix the CaseReport model middleware, then try again."
+          : (/Could not connect to the secure service/i.test(String(error?.message || ""))
+              ? `Unable to connect right now. Please try again in a moment.`
+              : (error.message || "Unable to create case report."));
+        setStatus("reportStatus", fallbackMessage, "error");
+      } finally {
+        submitBtn.disabled = false;
+      }
+    }
+
+    function renderCaseCreated(caseItem) {
+      document.getElementById("caseIdDisplay").textContent = caseItem.caseId || "Not available";
+    }
+
+    async function findCaseById(caseId) {
+      const id = String(caseId || "").trim();
+      if (!id) throw new Error("Enter a valid case ID.");
+
+      try {
+        const single = await tryRoutes(
+          [
+            { method: "GET", path: `/cases/${encodeURIComponent(id)}`, body: false },
+            { method: "GET", path: `/reports/${encodeURIComponent(id)}`, body: false },
+            { method: "GET", path: `/report/${encodeURIComponent(id)}`, body: false },
+            { method: "GET", path: `/report/case/${encodeURIComponent(id)}`, body: false },
+          ],
+          () => undefined
+        );
+        return normalizeCase(single, id);
+      } catch (error) {
+        const list = await tryRoutes(
+          [
+            { method: "GET", path: "/cases", body: false },
+            { method: "GET", path: "/reports", body: false },
+            { method: "GET", path: "/report/all-reports", body: false },
+          ],
+          () => undefined
+        );
+        const cases = normalizeCaseList(list);
+        const match = cases.find((item) => String(item.caseId).toLowerCase() === id.toLowerCase());
+        if (!match) throw error;
+        return match;
+      }
+    }
+
+    function renderTracking(caseItem) {
+      const timeline = Array.isArray(caseItem.timeline) ? caseItem.timeline : [];
+      document.getElementById("trackingCaseLabel").textContent = caseItem.caseId || "Case loaded";
+      document.getElementById("trackingStatusValue").textContent = caseItem.status || "submitted";
+      document.getElementById("trackingOfficerValue").textContent = caseItem.assignedOfficer || "Not assigned";
+      document.getElementById("trackingIncidentValue").textContent = caseItem.incidentType || "Not specified";
+      document.getElementById("trackingLocationValue").textContent = caseItem.location || "Not shared";
+      document.getElementById("trackingCaseIdText").textContent = caseItem.caseId || "-";
+      document.getElementById("trackingSubmittedText").textContent = formatDate(caseItem.submittedAt);
+      const originalTrackingText = caseItem.originalIncidentDetails || caseItem.incidentDetails || "No details shared.";
+      document.getElementById("trackingDescriptionText").textContent = originalTrackingText;
+      document.getElementById("trackingLanguageText").textContent = caseItem.reportLanguage || "Not specified";
+      const trackingAudioWrap = document.getElementById("trackingVoiceNoteWrap");
+      if (trackingAudioWrap) {
+        trackingAudioWrap.innerHTML = caseItem.voiceNoteUrl
+          ? `<audio controls style="width:100%; margin-top:8px;" src="${escapeHtml(caseItem.voiceNoteUrl)}"></audio>`
+          : `<small>No voice note attached.</small>`;
+      }
+      const chatClosed = updateUserChatAvailability(caseItem);
+
+      const timelineWrap = document.getElementById("trackingTimeline");
+      const updates = timeline.length
+        ? timeline
+        : [{ status: caseItem.status || "submitted", note: "Case created and saved securely.", createdAt: caseItem.submittedAt }];
+
+      timelineWrap.innerHTML = updates
+        .map((item) => `
+          <div class="timeline-item">
+            <strong>${escapeHtml(item.status || "Update")}</strong>
+            <small>${escapeHtml(item.note || item.message || "Update saved.")}</small>
+            <small>${escapeHtml(formatDate(item.createdAt || item.timestamp || item.date))}</small>
+          </div>
+        `)
+        .join("");
+
+      if (chatClosed) {
+        setStatus("trackingStatusText", "This case chat is closed. You can still view updates, but you cannot send new messages.", "info");
+      }
+    }
+
+    async function loadTracking(caseId, statusElementId = "trackingStatusText") {
+      const id = String(caseId || state.currentCaseId || "").trim();
+      if (!id) {
+        setStatus(statusElementId, "No case ID available yet.", "error");
+        return;
+      }
+
+      setStatus(statusElementId, "Loading case details...", "info");
+      try {
+        const caseItem = await findCaseById(id);
+        state.currentCase = caseItem;
+        state.currentCaseId = caseItem.caseId || id;
+        persistValue("safherlife-current-case-id", state.currentCaseId, "local");
+        renderTracking(caseItem);
+        setStatus(statusElementId, "Case loaded successfully.", "success");
+        showScreen("tracking");
+      } catch (error) {
+        setStatus(statusElementId, error.message || "Unable to load case.", "error");
+      }
+    }
+
+    async function fetchMessagesForCase(caseId) {
+      const id = String(caseId || state.currentCaseId || "").trim();
+      if (!id) throw new Error("No case ID available.");
+
+      try {
+        const response = await tryRoutes(
+          [
+            { method: "GET", path: `/cases/${encodeURIComponent(id)}/messages`, body: false },
+            { method: "GET", path: `/cases/${encodeURIComponent(id)}/chat`, body: false },
+            { method: "GET", path: `/messages/${encodeURIComponent(id)}`, body: false },
+            { method: "GET", path: `/chat/${encodeURIComponent(id)}`, body: false },
+            { method: "GET", path: `/report/${encodeURIComponent(id)}/messages`, body: false },
+          ],
+          () => undefined
+        );
+
+        const list = Array.isArray(response?.messages)
+          ? response.messages
+          : Array.isArray(response?.chat)
+          ? response.chat
+          : Array.isArray(response?.data)
+          ? response.data
+          : Array.isArray(response)
+          ? response
+          : [];
+
+        return list.map((msg) => ({
+          sender: String(msg.sender || msg.senderRole || msg.role || msg.author || "staff").toLowerCase(),
+          text: msg.text || msg.message || msg.body || msg.note || "",
+          voiceNoteUrl: msg.voiceNoteUrl || msg.voiceNoteData || msg.audioUrl || msg.audioData || "",
+          voiceNoteMimeType: msg.voiceNoteMimeType || msg.audioMimeType || "",
+          voiceNoteFileName: msg.voiceNoteFileName || msg.audioFileName || "",
+          createdAt: msg.createdAt || msg.sentAt || msg.timestamp || "",
+        }));
+      } catch (error) {
+        const latestCase = state.currentCase || (await findCaseById(id));
+        return timelineToMessages(latestCase);
+      }
+    }
+
+    function renderChat(messages) {
+      const list = Array.isArray(messages) ? messages : [];
+      const wrap = document.getElementById("chatMessages");
+      if (!list.length) {
+        wrap.innerHTML = '<div class="message system"><strong>No messages yet</strong><div>Messages saved for this case will appear here securely.</div></div>';
+        return;
+      }
+
+      wrap.innerHTML = list
+        .map((msg) => {
+          const sender = String(msg.sender || "system").toLowerCase();
+          const cssClass = sender.includes("survivor") || sender === "user" || sender === "you" ? "you" : sender.includes("staff") || sender.includes("worker") ? "staff" : "system";
+          const title = cssClass === "you" ? "You" : cssClass === "staff" ? "Social worker" : "System";
+          const hasText = Boolean(String(msg.text || "").trim());
+          const hasVoice = Boolean(String(msg.voiceNoteUrl || "").trim());
+          return `
+            <div class="message ${cssClass}">
+              <strong>${escapeHtml(title)}</strong>
+              ${hasText ? `<div>${escapeHtml(msg.text || "")}</div>` : `<div><em>Voice note sent</em></div>`}
+              ${hasVoice ? `<audio controls style="width:100%; margin-top:10px;" src="${escapeHtml(msg.voiceNoteUrl)}"></audio>${msg.voiceNoteFileName ? `<div class="message-time">${escapeHtml(msg.voiceNoteFileName)}</div>` : ""}` : ""}
+              <div class="message-time">${escapeHtml(formatDate(msg.createdAt))}</div>
+            </div>
+          `;
+        })
+        .join("");
+    }
+
+    async function loadChat(caseId) {
+      const id = String(caseId || state.currentCaseId || "").trim();
+      if (!id) {
+        setStatus("chatStatus", "Load a case first before opening chat.", "error");
+        return;
+      }
+
+      setStatus("chatStatus", "Loading secure messages...", "info");
+      try {
+        if (!state.currentCase || state.currentCase.caseId !== id) {
+          state.currentCase = await findCaseById(id);
+        }
+        const messages = await fetchMessagesForCase(id);
+        const chatClosed = updateUserChatAvailability(state.currentCase);
+        renderChat(messages);
+        document.getElementById("chatCaseIdText").textContent = state.currentCase.caseId || id;
+        document.getElementById("chatOfficerText").textContent = state.currentCase.assignedOfficer || "Not assigned";
+        setStatus("chatStatus", chatClosed ? "Chat is closed by staff. You can only read messages." : "Chat synced successfully.", chatClosed ? "info" : "success");
+        showScreen("chat");
+      } catch (error) {
+        renderChat([]);
+        setStatus("chatStatus", error.message || "Unable to load chat.", "error");
+        showScreen("chat");
+      }
+    }
+
+    async function sendChatMessage() {
+      const text = document.getElementById("chatInput").value.trim();
+      const hasVoiceNote = Boolean(state.chatVoiceNote.dataUrl);
+      if (!state.currentCaseId) {
+        setStatus("chatStatus", "Load a case first before sending a message.", "error");
+        return;
+      }
+      if (!text && !hasVoiceNote) {
+        setStatus("chatStatus", "Type a message or attach a voice note first.", "error");
+        return;
+      }
+      if (isCaseChatClosed(state.currentCase)) {
+        updateUserChatAvailability(state.currentCase);
+        setStatus("chatStatus", "This case chat is closed by staff. New messages are disabled.", "error");
+        return;
+      }
+
+      const messageVariants = [
+        {
+          caseId: state.currentCaseId,
+          text,
+          message: text,
+          body: text,
+          sender: "survivor",
+          role: "survivor",
+          voiceNoteData: state.chatVoiceNote.dataUrl,
+          voiceNoteMimeType: state.chatVoiceNote.mimeType,
+          voiceNoteFileName: state.chatVoiceNote.fileName,
+          createdAt: new Date().toISOString(),
+        },
+        {
+          caseId: state.currentCaseId,
+          note: text || 'Voice note sent',
+          latestMessage: text || 'Voice note sent',
+          sender: "survivor",
+          status: state.currentCase?.status || "reviewing",
+          voiceNoteData: state.chatVoiceNote.dataUrl,
+          voiceNoteMimeType: state.chatVoiceNote.mimeType,
+          voiceNoteFileName: state.chatVoiceNote.fileName,
+        },
+      ];
+
+      setStatus("chatStatus", `Sending secure message...`, "info");
+      try {
+        let sent = false;
+
+        for (const payload of messageVariants) {
+          try {
+            await tryRoutes(
+              [
+                { method: "POST", path: `/cases/${encodeURIComponent(state.currentCaseId)}/messages` },
+                { method: "POST", path: `/cases/${encodeURIComponent(state.currentCaseId)}/chat` },
+                { method: "POST", path: `/messages/${encodeURIComponent(state.currentCaseId)}` },
+                { method: "POST", path: `/chat/${encodeURIComponent(state.currentCaseId)}` },
+                { method: "POST", path: `/report/${encodeURIComponent(state.currentCaseId)}/messages` },
+              ],
+              () => payload
+            );
+            sent = true;
+            break;
+          } catch (messageError) {}
+
+          try {
+            await tryRoutes(
+              [
+                { method: "PATCH", path: `/cases/${encodeURIComponent(state.currentCaseId)}` },
+                { method: "PATCH", path: `/report/${encodeURIComponent(state.currentCaseId)}` },
+                { method: "PUT", path: `/report/${encodeURIComponent(state.currentCaseId)}` },
+              ],
+              () => payload
+            );
+            sent = true;
+            break;
+          } catch (updateError) {}
+        }
+
+        if (!sent) {
+          throw new Error("Unable to send message to the secure service.");
+        }
+
+        document.getElementById("chatInput").value = "";
+        clearChatVoiceNote("");
+        await loadChat(state.currentCaseId);
+        await loadTracking(state.currentCaseId, "trackingStatusText");
+        setStatus("chatStatus", `Message sent successfully.`, "success");
+      } catch (error) {
+        setStatus("chatStatus", error.message || "Unable to send message.", "error");
+      }
+    }
+
+
+    function renderCommunityRiskResult(payload) {
+      const wrap = document.getElementById("communityRiskResult");
+      const snapshot = payload?.communityRisk || payload || {};
+      if (!wrap) return;
+      if (!snapshot || !snapshot.areaLabel) {
+        wrap.innerHTML = "";
+        return;
+      }
+      const signals = Array.isArray(snapshot.matchedSignals) ? snapshot.matchedSignals : [];
+      wrap.innerHTML = `
+        <div class="resource-card"><strong>Area</strong><small>${escapeHtml(snapshot.areaLabel || payload.area || "Not shared")}</small></div>
+        <div class="resource-card"><strong>Risk level</strong><small>${escapeHtml(snapshot.riskLevel || "Low")} (${escapeHtml(String(snapshot.riskScore || 0))}/100)</small></div>
+        <div class="resource-card"><strong>Insight</strong><small>${escapeHtml(snapshot.advisory || "No insight available.")}</small></div>
+        <div class="resource-card"><strong>Matched signals</strong><small>${signals.length ? signals.map(escapeHtml).join(" • ") : "No repeated pattern yet."}</small></div>
+      `;
+    }
+
+    async function loadCommunityRiskInsight() {
+      const areaInput = document.getElementById("communityAreaInput");
+      const area = areaInput ? areaInput.value.trim() : "";
+      if (!area) {
+        setStatus("communityRiskStatus", "Enter a community or area to check first.", "error");
+        return;
+      }
+      setStatus("communityRiskStatus", "Checking community safety insight...", "info");
+      try {
+        const payload = await tryRoutes(
+          [
+            { method: "GET", path: `/report/community-risk?location=${encodeURIComponent(area)}`, body: false },
+            { method: "GET", path: `/reports/community-risk?location=${encodeURIComponent(area)}`, body: false },
+          ],
+          () => undefined
+        );
+        renderCommunityRiskResult(payload);
+        setStatus("communityRiskStatus", `Safety insight loaded successfully.`, "success");
+      } catch (error) {
+        setStatus("communityRiskStatus", error.message || "Unable to load community safety insight.", "error");
+      }
+    }
+
+    function updateStepUi() {
+      try { persistValue(REPORT_STEP_KEY, String(state.reportStep), "both"); } catch (error) {}
+      document.querySelectorAll("[data-step-chip]").forEach((chip) => {
+        chip.classList.toggle("active", Number(chip.dataset.stepChip) === state.reportStep);
+      });
+      document.querySelectorAll(".report-step").forEach((panel) => {
+        panel.style.display = Number(panel.dataset.step) === state.reportStep ? "block" : "none";
+      });
+      document.getElementById("stepLabel").textContent = `Step ${state.reportStep} of 4`;
+      document.getElementById("reportBackBtn").style.display = "inline-flex";
+      document.getElementById("reportNextBtn").style.display = state.reportStep === 4 ? "none" : "inline-flex";
+      document.getElementById("submitReportBtn").style.display = state.reportStep === 4 ? "inline-flex" : "none";
+    }
+
+    function bindSelectableCards(containerId, attrName) {
+      document.querySelectorAll(`#${containerId} .option-card`).forEach((card) => {
+        card.addEventListener("click", () => {
+          document.querySelectorAll(`#${containerId} .option-card`).forEach((item) => item.classList.remove("selected"));
+          card.classList.add("selected");
+          if (attrName && card.dataset[attrName]) {
+            card.dataset.value = card.dataset[attrName];
+          }
+        });
+      });
+    }
+
+    document.getElementById("startReportBtn").addEventListener("click", () => {
+      state.reportStep = 1;
+      updateStepUi();
+      setStatus("reportStatus", "", "info");
+      showScreen("report");
+    });
+
+    document.getElementById("openTrackBtn").addEventListener("click", () => {
+      if (state.currentCaseId) {
+        loadTracking(state.currentCaseId);
+      } else {
+        showScreen("icons");
+        document.getElementById("lookupCaseId").focus();
+      }
+    });
+
+    document.getElementById("openChatBtn").addEventListener("click", () => {
+      if (state.currentCaseId) {
+        loadChat(state.currentCaseId);
+      } else {
+        setStatus("lookupStatus", "Load or submit a case first before opening chat.", "error");
+      }
+    });
+
+    document.getElementById("openRightsBtn").addEventListener("click", () => {
+      showScreen("rights");
+    });
+
+    document.getElementById("rightsStartReportBtn").addEventListener("click", () => {
+      setStatus("reportStatus", "", "info");
+      showScreen("report");
+    });
+
+    document.getElementById("rightsBackHomeBtn").addEventListener("click", () => {
+      showScreen("icons");
+    });
+
+    document.getElementById("openTeamPageBtn").addEventListener("click", () => {
+      window.open("https://safeherlife-frontend.onrender.com/team.html", "_blank", "noopener,noreferrer");
+    });
+
+    document.getElementById("communityRiskBtn").addEventListener("click", loadCommunityRiskInsight);
+
+    document.getElementById("trackLookupBtn").addEventListener("click", () => {
+      const id = document.getElementById("lookupCaseId").value.trim();
+      loadTracking(id, "lookupStatus");
+    });
+
+    clearTrackingLookupField();
+
+    document.getElementById("reportBackBtn").addEventListener("click", () => {
+      if (state.reportStep > 1) {
+        state.reportStep -= 1;
+        updateStepUi();
+      } else {
+        showScreen("icons");
+      }
+    });
+
+    document.getElementById("reportNextBtn").addEventListener("click", () => {
+      if (state.reportStep < 4) {
+        state.reportStep += 1;
+        updateStepUi();
+      }
+    });
+
+    document.getElementById("startVoiceNoteBtn").addEventListener("click", startVoiceRecording);
+    document.getElementById("stopVoiceNoteBtn").addEventListener("click", stopVoiceRecording);
+    document.getElementById("clearVoiceNoteBtn").addEventListener("click", () => clearVoiceNote());
+    document.getElementById("voiceNoteUpload").addEventListener("change", handleVoiceNoteUpload);
+    document.getElementById("startChatVoiceNoteBtn").addEventListener("click", startChatVoiceRecording);
+    document.getElementById("stopChatVoiceNoteBtn").addEventListener("click", stopChatVoiceRecording);
+    document.getElementById("clearChatVoiceNoteBtn").addEventListener("click", () => clearChatVoiceNote());
+    document.getElementById("chatVoiceNoteUpload").addEventListener("change", handleChatVoiceNoteUpload);
+    document.getElementById("submitReportBtn").addEventListener("click", submitCase);
+    document.getElementById("goTrackingBtn").addEventListener("click", () => loadTracking(state.currentCaseId));
+    document.getElementById("returnHomeBtn").addEventListener("click", () => showScreen("icons"));
+    document.getElementById("returnHomeTop").addEventListener("click", () => goSafeHome(false));
+    document.getElementById("quickExitTop").addEventListener("click", () => goSafeHome(true));
+    document.getElementById("quickExitPanelBtn").addEventListener("click", () => goSafeHome(true));
+    document.getElementById("copyCaseBtn").addEventListener("click", async () => {
+      const value = state.currentCaseId || document.getElementById("caseIdDisplay").textContent.trim();
+      if (!value) return;
+      try {
+        await navigator.clipboard.writeText(value);
+        } catch (error) {
+        }
+    });
+
+    document.getElementById("refreshTrackingBtn").addEventListener("click", () => loadTracking(state.currentCaseId));
+    document.getElementById("openTrackingChatBtn").addEventListener("click", () => loadChat(state.currentCaseId));
+    document.getElementById("backToTrackingBtn").addEventListener("click", () => loadTracking(state.currentCaseId));
+    document.getElementById("sendChatBtn").addEventListener("click", sendChatMessage);
+    document.getElementById("refreshChatBtn").addEventListener("click", () => loadChat(state.currentCaseId));
+
+
+function handleCalculatorAction(action) {
+  if (action === "clear") clearCalculator();
+  else if (action === "back") {
+    state.calcExpression = state.calcExpression.slice(0, -1);
+    renderCalcDisplay(state.calcExpression);
+  } else if (action === "plus") appendCalcOperator("+");
+  else if (action === "minus") appendCalcOperator("-");
+  else if (action === "multiply") appendCalcOperator("*");
+  else if (action === "divide") appendCalcOperator("/");
+  else if (action === "equals") evaluateCalculator();
+}
+
+function bindCalculatorControls() {
+  const keypad = document.querySelector(".calc-keypad");
+  if (keypad && !keypad.dataset.bound) {
+    keypad.dataset.bound = "1";
+    keypad.addEventListener("click", (event) => {
+      const btn = event.target.closest("button.calc-key");
+      if (!btn) return;
+      const value = btn.dataset.calcValue || "";
+      const action = btn.dataset.calcAction || "";
+      if (value) {
+        appendCalcValue(value);
+        setStatus("entryStatus", "", "info");
+        return;
+      }
+      if (action) {
+        handleCalculatorAction(action);
+      }
+    });
+  }
+
+  const unlockBtn = document.getElementById("unlockIconsBtn");
+  if (unlockBtn && !unlockBtn.dataset.bound) {
+    unlockBtn.dataset.bound = "1";
+    unlockBtn.addEventListener("click", openIconsWithCurrentInput);
+  }
+
+  const createPinBtn = document.getElementById("createPinBtn");
+  if (createPinBtn && !createPinBtn.dataset.bound) {
+    createPinBtn.dataset.bound = "1";
+    createPinBtn.addEventListener("click", createOrChangePin);
+  }
+
+  const removePinBtn = document.getElementById("removePinBtn");
+  if (removePinBtn && !removePinBtn.dataset.bound) {
+    removePinBtn.dataset.bound = "1";
+    removePinBtn.addEventListener("click", removePin);
+  }
+}
+
+window.addEventListener("online", () => {
+  setStatus("entryStatus", "Connection restored.", "success");
+});
+
+window.addEventListener("offline", () => {
+  setStatus("entryStatus", "You are offline. Backend requests will fail until your connection returns.", "error");
+});
+
+window.addEventListener("beforeunload", () => {
+  try {
+    persistValue(ACTIVE_SCREEN_KEY, state.activeScreen || "entry", "both");
+    persistValue(REPORT_STEP_KEY, String(state.reportStep || 1), "both");
+    persistValue("safevoice-current-case-id", state.currentCaseId || "", "local");
+    if (getStoredPin() && state.activeScreen !== "entry") {
+      persistValue(ACCESS_GRANTED_KEY, "1", "both");
+    }
+  } catch (error) {}
+});
+
+
+    bindSelectableCards("incidentOptions");
+    bindSelectableCards("contactOptions", "contactMode");
+    bindCalculatorControls();
+    updateStepUi();
+    initializeEntryScreen();
+    syncChromeForScreen("entry");
+    restoreClientScreen();
+
+    if (clientSocket) {
+      clientSocket.on("connect", () => {
+        joinCurrentCaseRoom();
+      });
+
+      clientSocket.on("case-status-changed", ({ case: updatedCase }) => {
+        if (!updatedCase) return;
+        const normalized = normalizeCase(updatedCase, updatedCase.caseId || state.currentCaseId || "");
+        state.currentCase = normalized;
+        state.currentCaseId = normalized.caseId || state.currentCaseId;
+        persistValue("safevoice-current-case-id", state.currentCaseId || "", "local");
+        if (state.activeScreen === "tracking") {
+          renderTracking(normalized);
+        }
+        if (state.activeScreen === "case") {
+          renderCaseCreated(normalized);
+        }
+        if (state.activeScreen === "chat") {
+          renderChat(timelineToMessages(normalized));
+        }
+      });
+
+      clientSocket.on("case-message", ({ case: updatedCase }) => {
+        if (!updatedCase) return;
+        const normalized = normalizeCase(updatedCase, updatedCase.caseId || state.currentCaseId || "");
+        state.currentCase = normalized;
+        state.currentCaseId = normalized.caseId || state.currentCaseId;
+        persistValue("safevoice-current-case-id", state.currentCaseId || "", "local");
+        updateUserChatAvailability(normalized);
+        if (state.activeScreen === "tracking") {
+          renderTracking(normalized);
+        }
+        if (state.activeScreen === "chat") {
+          renderChat(timelineToMessages(normalized));
+          setStatus("chatStatus", isCaseChatClosed(normalized) ? "Chat is closed by staff. New messages are disabled." : "Chat updated.", isCaseChatClosed(normalized) ? "info" : "success");
+        }
+      });
+    }
+
+  </script>
+</body>
+</html>

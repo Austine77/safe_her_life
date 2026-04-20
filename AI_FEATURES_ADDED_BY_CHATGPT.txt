@@ -1,0 +1,11 @@
+Added two requested features:
+1. Community safety insight suggestions for registered users based on repeated report patterns.
+2. Indigenous language support field during report submission and staff review.
+
+Updated files:
+- backend/models/CaseReport.js
+- backend/controllers/caseController.js
+- backend/controllers/reportController.js
+- backend/routes/reportRoutes.js
+- frontend/index.html
+- frontend/staff.html

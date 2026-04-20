@@ -1,0 +1,19 @@
+safe_her_life fixes applied
+
+1. Backend
+- Made CORS accept the actual requesting origin so frontend requests are less likely to fail in dev or deployment.
+- Hardened case creation in backend/controllers/caseController.js.
+- Added better normalization, duplicate caseId retry, and detailed server logging for failed case creation.
+- Validation errors now return 400 with clearer details instead of a generic 500 where possible.
+
+2. Frontend user app (frontend/index.html)
+- Added persistent screen restoration using storage plus URL hash.
+- Current case ID and report step now persist more reliably across refresh.
+- Case screen, tracking screen, chat screen, and report screen restore better after reload.
+- Added clearer console logging and success/error state handling on report submission.
+
+3. What to do on your computer
+- Delete old frontend/node_modules and backend/node_modules if they were copied from another machine.
+- Run npm install again in both frontend and backend folders.
+- Start backend first, then frontend.
+- If case creation still fails, the backend terminal now prints the real error under createCase failed: so you can see the exact database problem.

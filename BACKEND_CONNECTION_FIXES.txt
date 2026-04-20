@@ -1,0 +1,5 @@
+Connection updates applied:
+- Fixed malformed backend/.env MONGODB_URI line
+- Added explicit safevoice-api-base meta tag to frontend HTML files
+- Relaxed backend CORS to allow localhost and *.onrender.com origins
+- Preserved calculator-first index and updated staff/team pages
